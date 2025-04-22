@@ -202,11 +202,110 @@ sap.ui.define([
             this.byId("createRequestDialog").close();
             MessageToast.show("Request created successfully");
             
-            // Open the application in a new tab
-            window.open(window.location.href, '_blank');
+            // Open the form data in a new tab
+            this.openFormInNewTab(oNewRequest, oRequest);
             
             oModel.setProperty("/selectedRequest", JSON.parse(JSON.stringify(oRequest)));
             this.byId("requestDetailsDialog").open();
+        },
+
+        openFormInNewTab: function(oNewRequest, oSelectedRequest) {
+            const sRequestType = oNewRequest.type ? this.getView().getModel().getProperty(`/requestTypes/${oNewRequest.type}/text`) : "";
+            const sDescription = oNewRequest.description || "";
+            const sFileName = oNewRequest.file || "";
+            const sRequestNo = oSelectedRequest.requestNo || "";
+            const sCreatedBy = oSelectedRequest.createdBy || "Current User";
+            const sCreatedDate = oSelectedRequest.createdOn || new Date().toLocaleDateString();
+            const sStatus = oSelectedRequest.status || "Draft";
+
+            const sHtmlContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Price Requisition</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 20px; }
+                        .header { background-color: #003087; color: white; padding: 10px; display: flex; justify-content: space-between; align-items: center; }
+                        .header img { height: 40px; }
+                        .header .title { margin: 0; }
+                        .container { border: 2px solid #003087; padding: 20px; margin-top: 10px; }
+                        .mandatory { color: red; font-size: 12px; }
+                        .form-group { margin-bottom: 10px; }
+                        .form-group label { margin-right: 10px; }
+                        .form-group input { padding: 5px; width: 200px; }
+                        .table-section { margin-top: 20px; }
+                        table { width: 100%; border-collapse: collapse; }
+                        table, th, td { border: 1px solid #ccc; }
+                        th, td { padding: 10px; text-align: left; }
+                        th { background-color: #f2f2f2; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN4zI47qvXfN00zC2FBC8aRP0kB6wtIcWTRQ" alt="Logo">
+                        <h2 class="title">Price Requisition</h2>
+                        <div>Home</div>
+                    </div>
+                    <div class="container">
+                        <h3>Price Requisition Details</h3>
+                        <p class="mandatory">Fields marked with * are mandatory</p>
+                        <div class="form-group">
+                            <label>Reference No:*</label><input type="text" value="${sRequestNo}" readonly>
+                            <label>Created By:</label><input type="text" value="${sCreatedBy}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Division:*</label><input type="text" value="${sRequestType}" readonly>
+                            <label>Created Date:</label><input type="text" value="${sCreatedDate}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>DCNR# form:</label><input type="text" value="" readonly>
+                            <label>Status of the Request:</label><input type="text" value="${sStatus}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Standard Reason:</label><input type="text" value="${sDescription}" readonly>
+                            <label>Sales Group:</label><input type="text" value="" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Comment by Creator:</label><input type="text" value="" readonly>
+                            <label>DCNR to:</label><input type="text" value="${sFileName}" readonly>
+                        </div>
+                        <div class="table-section">
+                            <h3>Division Section Table</h3>
+                            <table>
+                                <tr>
+                                    <th>Role</th>
+                                    <th>Approver</th>
+                                    <th>Role</th>
+                                    <th>Approver</th>
+                                </tr>
+                                <tr>
+                                    <td>Approver 1</td>
+                                    <td><input type="text" value="ayush.jha@sumo" readonly></td>
+                                    <td>Alternate Approver 1</td>
+                                    <td><input type="text" value="tani.singh@sumo" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td>Approver 2</td>
+                                    <td><input type="text" value="ayushi.khanolkar@sumo" readonly></td>
+                                    <td>Alternate Approver 2</td>
+                                    <td><input type="text" value="aakib.mohd@sumo" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td>Approver 3</td>
+                                    <td><input type="text" value="yugal.kishore@sumo" readonly></td>
+                                    <td>Alternate Approver 3</td>
+                                    <td><input type="text" value="sumit.jhadjiyal@sumo" readonly></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `;
+
+            const oNewTab = window.open('', '_blank');
+            oNewTab.document.write(sHtmlContent);
+            oNewTab.document.close();
         },
 
         onCancelCreate: function() {
