@@ -141,7 +141,7 @@
                                         <Text text="{/selectedRequest/requestAging}"/>
                                     </form:SimpleForm>
                                 </IconTabFilter>
-                                <IconTabFilter text="History" key="history" icon="sap-icon://history">
+                                <IconTabFilter text="History" key="history" icon="sap-icon://hint">
                                     <suite:Timeline id="requestTimeline" axisOrientation="Vertical" enableDoubleSided="false">
                                         <suite:TimelineItem
                                             dateTime="Feb 02, 2025"
