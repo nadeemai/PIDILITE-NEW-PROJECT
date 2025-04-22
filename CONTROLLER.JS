@@ -202,16 +202,11 @@ sap.ui.define([
             this.byId("createRequestDialog").close();
             MessageToast.show("Request created successfully");
             
-            // Open the request details in a new tab
-            const oSelectedRequest = JSON.parse(JSON.stringify(oRequest));
-            oModel.setProperty("/selectedRequest", oSelectedRequest);
-            const oView = this.getView().clone();
-            oView.setModel(new JSONModel({ selectedRequest: oSelectedRequest, editable: false }));
-            oView.placeAt("content", "only");
-            const oNewWindow = window.open("", "_blank");
-            oNewWindow.document.write("<div id='content'></div>");
-            oView.placeAt(oNewWindow.document.getElementById("content"));
-            oNewWindow.document.close();
+            // Open the application in a new tab
+            window.open(window.location.href, '_blank');
+            
+            oModel.setProperty("/selectedRequest", JSON.parse(JSON.stringify(oRequest)));
+            this.byId("requestDetailsDialog").open();
         },
 
         onCancelCreate: function() {
