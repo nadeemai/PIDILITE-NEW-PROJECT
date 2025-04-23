@@ -1,0 +1,273 @@
+<mvc:View
+    controllerName="com.tableentry.tablestructure.controller.Table_Entry"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.ui.unified"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:layout="sap.ui.layout" 
+    xmlns:suite="sap.suite.ui.commons"
+    displayBlock="true"
+    class="dashboardView">
+
+            <Panel class="dashboardPanel" expandable="false">
+                <headerToolbar>
+                    <Toolbar class="headerToolbar">
+                        <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN4zI47qvXfN00zC2FBC8aRP0kB6wtIcWTRQ" 
+                               width="110px" height="50px" class="logo"/>
+                        <Title text="Approval Portal Dashboard" class="headerTitle" />
+                    </Toolbar>
+                </headerToolbar>
+                <VBox class="sapUiSmallMargin">
+
+                    <!-- Header Tiles -->
+                    <HBox justifyContent="Center" alignItems="Center" class="tileContainer">
+                        <GenericTile header="My Draft Requests" class="customTile draftTile" press="onTilePress">
+                            <TileContent>
+                                <NumericContent value="{/draftCount}" valueColor="Neutral" withMargin="false" class="centeredNumericContent"/>
+                            </TileContent>
+                        </GenericTile>
+                        <GenericTile header="Sent Back Requests" class="customTile sentBackTile" press="onTilePress">
+                            <TileContent>
+                                <NumericContent value="{/sentBackCount}" valueColor="Critical" withMargin="false" class="centeredNumericContent"/>
+                            </TileContent>
+                        </GenericTile>
+                        <GenericTile header="Rejected Requests" class="customTile rejectedTile" press="onTilePress">
+                            <TileContent>
+                                <NumericContent value="{/rejectedCount}" valueColor="Error" withMargin="false" class="centeredNumericContent"/>
+                            </TileContent>
+                        </GenericTile>
+                        <GenericTile header="In-Progress Requests" class="customTile inProgressTile" press="onTilePress">
+                            <TileContent>
+                                <NumericContent value="{/inProgressCount}" valueColor="Good" withMargin="false" class="centeredNumericContent"/>
+                            </TileContent>
+                        </GenericTile>
+                        <GenericTile header="All Requests" class="customTile allTile" press="onTilePress">
+                            <TileContent>
+                                <NumericContent value="{/allCount}" withMargin="false" class="centeredNumericContent"/>
+                            </TileContent>
+                        </GenericTile>
+                    </HBox>
+
+                    <!-- Filter Panel -->
+                    <Panel class="filterPanel">
+                        <HBox alignItems="Center" justifyContent="SpaceBetween">
+                            <HBox alignItems="Center">
+                                <Label text="Request No:" class="sapUiSmallMarginEnd"/>
+                                <Input width="150px" value="{/filter/requestNo}" liveChange="onFilterChange"/>
+                                <Label text="Created By:" class="sapUiSmallMarginEnd"/>
+                                <Input width="150px" value="{/filter/createdBy}" liveChange="onFilterChange"/>
+                                <Label text="Created on:" class="sapUiSmallMarginEnd"/>
+                                <DatePicker width="150px" value="{/filter/createdOn}" change="onFilterChange"/>
+                                <Label text="Status:" class="sapUiSmallMarginEnd"/>
+                                <ComboBox width="150px" items="{/statusItems}" selectedKey="{/filter/status}" change="onFilterChange">
+                                    <core:Item key="{key}" text="{text}"/>
+                                </ComboBox>
+                            </HBox>
+                            <Button text="Clear" press="onClearFilters" type="Transparent"/>
+                        </HBox>
+                    </Panel>
+
+                    <!-- Icon Tab Bar with Create Button -->
+                    <IconTabBar id="requestsTabBar" select="onTabSelect" expandable="false" class="sapUiResponsiveMargin">
+                        <items>
+                            <IconTabFilter text="Requests" key="all" count="{/allCount}">
+                                <VBox>
+                                    <Toolbar>
+                                        <Button icon="sap-icon://add" text="Create New Request" press="onCreatePress" type="Emphasized"/>
+                                    </Toolbar>
+                                    <Table id="dashboardTable" items="{/requests}" 
+                                           mode="SingleSelectMaster" itemPress="onItemPress" growing="true" growingThreshold="10">
+                                        <columns>
+                                            <Column width="15%"><Text text="Request No" /></Column>
+                                            <Column width="15%"><Text text="Created By" /></Column>
+                                            <Column width="15%"><Text text="Created On" /></Column>
+                                            <Column width="15%"><Text text="Status" /></Column>
+                                            <Column width="15%"><Text text="Remarks" /></Column>
+                                            <Column width="15%"><Text text="Pending With" /></Column>
+                                            <Column width="15%"><Text text="Request Aging" /></Column>
+                                        </columns>
+                                        <items>
+                                            <ColumnListItem type="Navigation">
+                                                <cells>
+                                                    <Text text="{requestNo}" />
+                                                    <Text text="{createdBy}" />
+                                                    <Text text="{createdOn}" />
+                                                    <ObjectStatus text="{status}" 
+                                                        state="{= ${status} === 'Send Back' ? 'Warning' : ${status} === 'Rejected' ? 'Error' : ${status} === 'Pending Request' ? 'Information' : 'None'}" />
+                                                    <Text text="{remarks}" />
+                                                    <Text text="{pendingWith}" />
+                                                    <Text text="{requestAging}" />
+                                                </cells>
+                                            </ColumnListItem>
+                                        </items>
+                                    </Table>
+                                </VBox>
+                            </IconTabFilter>
+                        </items>
+                    </IconTabBar>
+
+                    <!-- Request Details Dialog -->
+                    <Dialog id="requestDetailsDialog" title="Price Requisition" contentWidth="900px" stretch="{device>/system/phone}">
+                        <content>
+                            <Panel class="sapUiSmallMargin">
+                                <Toolbar>
+                                    <ToolbarSpacer/>
+                                    <Button icon="sap-icon://save" text="Save" press="onSaveRequest" type="Accept" tooltip="Save Request"/>
+                                    <Button icon="sap-icon://print" text="Print" press="onPrintRequest" type="Default" tooltip="Print Request"/>
+                                    <Button icon="sap-icon://decline" text="Exit" press="onCloseRequest" type="Reject" tooltip="Close Dialog"/>
+                                    <Button icon="sap-icon://edit" text="Edit" press="onEditRequest" type="Default" tooltip="Toggle Edit Mode"/>
+                                </Toolbar>
+                                <VBox>
+                                    <form:SimpleForm layout="ResponsiveGridLayout" editable="{/editable}">
+                                        <Panel headerText="Price Requisition Details" expandable="true" expanded="true">
+                                            <Label text="Fields marked with * are mandatory" class="sapUiSmallMarginTop mandatoryLabel"/>
+                                            <Label text="Reference No:*"/>
+                                            <Input value="{/selectedRequest/referenceNo}"/>
+                                            <Label text="Division:*"/>
+                                            <Input value="{/selectedRequest/division}"/>
+                                            <Label text="Created By:"/>
+                                            <Text text="{/selectedRequest/createdBy}"/>
+                                            <Label text="Created Date:"/>
+                                            <Text text="{/selectedRequest/createdOn}"/>
+                                            <Label text="DCNR# form:"/>
+                                            <Input value="{/selectedRequest/dcnrForm}"/>
+                                            <Label text="Status of the Request:"/>
+                                            <Text text="{/selectedRequest/status}"/>
+                                            <Label text="Standard Reason:"/>
+                                            <Input value="{/selectedRequest/standardReason}"/>
+                                            <Label text="Sales Group:"/>
+                                            <Input value="{/selectedRequest/salesGroup}"/>
+                                            <Label text="Comment by Creator:"/>
+                                            <Input value="{/selectedRequest/creatorComment}"/>
+                                            <Label text="DCNR to:"/>
+                                            <Input value="{/selectedRequest/dcnrTo}"/>
+                                        </Panel>
+                                    </form:SimpleForm>
+                                </VBox>
+                                <Panel headerText="Division Section Table" expandable="true" expanded="true" class="sapUiSmallMarginTop">
+                                    <Table items="{/approvers}" width="100%">
+                                        <columns>
+                                            <Column><Text text="Role"/></Column>
+                                            <Column><Text text="Approver"/></Column>
+                                            <Column><Text text="Role"/></Column>
+                                            <Column><Text text="Approver"/></Column>
+                                        </columns>
+                                        <items>
+                                            <ColumnListItem>
+                                                <cells>
+                                                    <Text text="{role1}"/>
+                                                    <Text text="{approver1}"/>
+                                                    <Text text="{role2}"/>
+                                                    <Text text="{approver2}"/>
+                                                </cells>
+                                            </ColumnListItem>
+                                        </items>
+                                    </Table>
+                                </Panel>
+                                <IconTabBar id="detailsTabBar" select="onDetailsTabSelect" expandable="false" class="sapUiSmallMarginTop">
+                                    <items>
+                                        <IconTabFilter text="Price Details" key="priceDetails">
+                                            <Table items="{/priceDetails}" width="100%">
+                                                <columns>
+                                                    <Column><Text text="Material"/></Column>
+                                                    <Column><Text text="Price List"/></Column>
+                                                    <Column><Text text="Price List Description"/></Column>
+                                                    <Column><Text text="UoM"/></Column>
+                                                    <Column><Text text="Indicative MRP"/></Column>
+                                                    <Column><Text text="Start Date"/></Column>
+                                                    <Column><Text text="End Date"/></Column>
+                                                    <Column><Text text="Default Price for Lot Material"/></Column>
+                                                </columns>
+                                                <items>
+                                                    <ColumnListItem>
+                                                        <cells>
+                                                            <Text text="{material}"/>
+                                                            <Text text="{priceList}"/>
+                                                            <Text text="{priceListDescription}"/>
+                                                            <Text text="{uom}"/>
+                                                            <Text text="{indicativeMRP}"/>
+                                                            <Text text="{startDate}"/>
+                                                            <Text text="{endDate}"/>
+                                                            <Text text="{defaultPrice}"/>
+                                                        </cells>
+                                                    </ColumnListItem>
+                                                </items>
+                                            </Table>
+                                        </IconTabFilter>
+                                        <IconTabFilter text="Timeline" key="timeline">
+                                            <suite:Timeline id="detailsTimeline" enableScroll="true" content="{/timelineItems}">
+                                                <suite:TimelineItem
+                                                    dateTime="{dateTime}"
+                                                    title="{title}"
+                                                    text="{text}"
+                                                    userName="{userName}"
+                                                    userPicture="{userPicture}"
+                                                    icon="sap-icon://history"/>
+                                            </suite:Timeline>
+                                        </IconTabFilter>
+                                    </items>
+                                </IconTabBar>
+                            </Panel>
+                        </content>
+                        <beginButton>
+                            <Button text="Submit" press="onSubmitRequest" type="Emphasized" visible="{/editable}"/>
+                        </beginButton>
+                        <endButton>
+                            <Button text="Close" press="onCloseRequest" type="Reject"/>
+                        </endButton>
+                    </Dialog>
+
+                    <!-- Create Request Dialog -->
+                    <Dialog id="createRequestDialog" title="Create New Request" contentWidth="500px">
+                        <content>
+                            <Panel class="sapUiSmallMargin">
+                                <form:SimpleForm layout="ResponsiveGridLayout" editable="true">
+                                    <Label text="Upload Files" class="sapUiSmallMarginTop"/>
+                                    <u:FileUploader
+                                        id="fileUploader"
+                                        name="requestFileUpload"
+                                        uploadUrl="upload/"
+                                        tooltip="Upload supporting documents"
+                                        uploadComplete="handleUploadComplete"
+                                        change="handleValueChange"
+                                        typeMissmatch="handleTypeMissmatch"
+                                        style="Emphasized"
+                                        fileType="txt,jpg,pdf,png"
+                                        placeholder="Choose a file to upload...">
+                                        <u:parameters>
+                                            <u:FileUploaderParameter name="param1" value="value1"/>
+                                        </u:parameters>
+                                    </u:FileUploader>
+                                    <Table id="uploadedFilesTable" items="{/uploadedFiles}" class="sapUiSmallMarginTop">
+                                        <headerToolbar>
+                                            <Toolbar>
+                                                <Title text="Attachment ({/uploadedFilesCount})"/>
+                                            </Toolbar>
+                                        </headerToolbar>
+                                        <columns>
+                                            <Column width="70%"><Text text="Attachment"/></Column>
+                                            <Column width="30%"><Text text="RelevantIns Attachment"/></Column>
+                                        </columns>
+                                        <items>
+                                            <ColumnListItem>
+                                                <cells>
+                                                    <Text text="{fileName}"/>
+                                                    <Button icon="sap-icon://download" press="onDownloadFile" tooltip="Download"/>
+                                                </cells>
+                                            </ColumnListItem>
+                                        </items>
+                                    </Table>
+                                </form:SimpleForm>
+                            </Panel>
+                        </content>
+                        <beginButton>
+                            <Button text="Create" press="onCreateRequest" type="Emphasized"/>
+                        </beginButton>
+                        <endButton>
+                            <Button text="Cancel" press="onCancelCreate" type="Reject"/>
+                        </endButton>
+                    </Dialog>
+                </VBox>
+            </Panel>
+</mvc:View>
