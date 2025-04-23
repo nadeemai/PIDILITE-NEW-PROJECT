@@ -121,46 +121,33 @@ UPDATED VIEW.XML CODE
                             <Button icon="sap-icon://decline" text="Exit" press="onCloseRequest" type="Reject" tooltip="Close Dialog"/>
                             <Button icon="sap-icon://edit" text="Edit" press="onEditRequest" type="Default" tooltip="Toggle Edit Mode"/>
                         </Toolbar>
-                        <HBox>
-                            <VBox width="50%">
-                                <form:SimpleForm layout="ResponsiveGridLayout" editable="{/editable}">
-                                    <Panel headerText="Price Requisition Details" expandable="true" expanded="true">
-                                        <Label text="Fields marked with * are mandatory" class="sapUiSmallMarginTop mandatoryLabel"/>
-                                        <Label text="Reference No:*"/>
-                                        <Input value="{/selectedRequest/referenceNo}"/>
-                                        <Label text="Division:*"/>
-                                        <Input value="{/selectedRequest/division}"/>
-                                        <Label text="Created By:"/>
-                                        <Text text="{/selectedRequest/createdBy}"/>
-                                        <Label text="Created Date:"/>
-                                        <Text text="{/selectedRequest/createdOn}"/>
-                                        <Label text="DCNR# form:"/>
-                                        <Input value="{/selectedRequest/dcnrForm}"/>
-                                        <Label text="Status of the Request:"/>
-                                        <Text text="{/selectedRequest/status}"/>
-                                        <Label text="Standard Reason:"/>
-                                        <Input value="{/selectedRequest/standardReason}"/>
-                                        <Label text="Sales Group:"/>
-                                        <Input value="{/selectedRequest/salesGroup}"/>
-                                        <Label text="Comment by Creator:"/>
-                                        <Input value="{/selectedRequest/creatorComment}"/>
-                                        <Label text="DCNR to:"/>
-                                        <Input value="{/selectedRequest/dcnrTo}"/>
-                                    </Panel>
-                                </form:SimpleForm>
-                            </VBox>
-                            <!-- <VBox width="50%">
-                                <suite:Timeline id="timeline" enableScroll="true" content="{/timelineItems}">
-                                    <suite:TimelineItem
-                                        dateTime="{dateTime}"
-                                        title="{title}"
-                                        text="{text}"
-                                        userName="{userName}"
-                                        userPicture="{userPicture}"
-                                        icon="sap-icon://history"/>
-                                </suite:Timeline>
-                            </VBox> -->
-                        </HBox>
+                        <VBox>
+                            <form:SimpleForm layout="ResponsiveGridLayout" editable="{/editable}">
+                                <Panel headerText="Price Requisition Details" expandable="true" expanded="true">
+                                    <Label text="Fields marked with * are mandatory" class="sapUiSmallMarginTop mandatoryLabel"/>
+                                    <Label text="Reference No:*"/>
+                                    <Input value="{/selectedRequest/referenceNo}"/>
+                                    <Label text="Division:*"/>
+                                    <Input value="{/selectedRequest/division}"/>
+                                    <Label text="Created By:"/>
+                                    <Text text="{/selectedRequest/createdBy}"/>
+                                    <Label text="Created Date:"/>
+                                    <Text text="{/selectedRequest/createdOn}"/>
+                                    <Label text="DCNR# form:"/>
+                                    <Input value="{/selectedRequest/dcnrForm}"/>
+                                    <Label text="Status of the Request:"/>
+                                    <Text text="{/selectedRequest/status}"/>
+                                    <Label text="Standard Reason:"/>
+                                    <Input value="{/selectedRequest/standardReason}"/>
+                                    <Label text="Sales Group:"/>
+                                    <Input value="{/selectedRequest/salesGroup}"/>
+                                    <Label text="Comment by Creator:"/>
+                                    <Input value="{/selectedRequest/creatorComment}"/>
+                                    <Label text="DCNR to:"/>
+                                    <Input value="{/selectedRequest/dcnrTo}"/>
+                                </Panel>
+                            </form:SimpleForm>
+                        </VBox>
                         <Panel headerText="Division Section Table" expandable="true" expanded="true" class="sapUiSmallMarginTop">
                             <Table items="{/approvers}" width="100%">
                                 <columns>
@@ -263,7 +250,7 @@ UPDATED VIEW.XML CODE
                                 </headerToolbar>
                                 <columns>
                                     <Column width="70%"><Text text="Attachment"/></Column>
-                                    <Column width="30%"><Text text="Relevant Attachment"/></Column>
+                                    <Column width="30%"><Text text="RelevantIns Attachment"/></Column>
                                 </columns>
                                 <items>
                                     <ColumnListItem>
@@ -287,8 +274,6 @@ UPDATED VIEW.XML CODE
         </VBox>
     </Panel>
 </mvc:View>
-
-
 
 
 
