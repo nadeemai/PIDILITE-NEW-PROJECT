@@ -160,15 +160,15 @@ sap.ui.define([
                 timelineItems: [
                     {
                         dateTime: "7/22/2016 at 3:00 PM",
-                        title: "Ankit Pathak Created a Request",
+                        title: "Ankit Patilak Created a Request",
                         text: "PLEASE go through and evaluate.",
-                        userName: "Ankit Pathak",
-                        userPicture: "https://ui-avatars.com/api/?name=Ankit+Pathak"
+                        userName: "Ankit Patilak",
+                        userPicture: "https://ui-avatars.com/api/?name=Ankit+Patilak"
                     },
                     {
                         dateTime: "7/22/2016 at 5:00 PM",
                         title: "Ayushi added a note [APPROVED]",
-                        text: "submitted",
+                        text: "ok",
                         userName: "Ayushi",
                         userPicture: "https://ui-avatars.com/api/?name=Ayushi"
                     },
@@ -181,10 +181,10 @@ sap.ui.define([
                     },
                     {
                         dateTime: "7/22/2016 at 3:00 PM",
-                        title: "Naosheen added a note [Approved]",
+                        title: "Naresh added a note [Approved]",
                         text: "Done.",
-                        userName: "Naosheen",
-                        userPicture: "https://ui-avatars.com/api/?name=Naosheen"
+                        userName: "Naresh",
+                        userPicture: "https://ui-avatars.com/api/?name=Naresh"
                     },
                     {
                         dateTime: "7/22/2016 at 3:00 PM",
@@ -198,7 +198,7 @@ sap.ui.define([
                     {
                         material: "FC88B7866",
                         priceList: "04",
-                        priceListDescription: "Price List 04",
+                        priceListDescription: "Price Lot 04",
                         uom: "EA",
                         indicativeMRP: "41.00",
                         startDate: "13-05-2025",
@@ -208,7 +208,7 @@ sap.ui.define([
                     {
                         material: "FC88B7866",
                         priceList: "04",
-                        priceListDescription: "Price List 04",
+                        priceListDescription: "Price Lot 04",
                         uom: "EA",
                         indicativeMRP: "41.00",
                         startDate: "18-05-2025",
@@ -218,7 +218,7 @@ sap.ui.define([
                     {
                         material: "FC88B7866",
                         priceList: "04",
-                        priceListDescription: "Price List 04",
+                        priceListDescription: "Price Lot 04",
                         uom: "EA",
                         indicativeMRP: "42.00",
                         startDate: "23-05-2025",
@@ -228,11 +228,11 @@ sap.ui.define([
                     {
                         material: "FC88B7866",
                         priceList: "04",
-                        priceListDescription: "Price List 04",
+                        priceListDescription: "Price Lot 04",
                         uom: "EA",
                         indicativeMRP: "71.09",
                         startDate: "3-05-2025",
-                        endDate: "1-07-2025",
+                        endDate: "11-07-2025",
                         defaultPrice: "X"
                     }
                 ],
@@ -360,279 +360,288 @@ sap.ui.define([
             oModel.setProperty("/selectedRequest", JSON.parse(JSON.stringify(oRequest)));
             
             // Open the request details in a new tab
+            const oDialog = this.byId("requestDetailsDialog");
+            const oDialogContent = oDialog.getContent()[0]; // Get the panel inside the dialog
+            
+            // Create a new window
             const oNewWindow = window.open("", "_blank");
             
+            // Write the dialog content to the new window with the modified structure
             oNewWindow.document.write(`
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>Price Requisition</title>
-                    <script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
-                            id="sap-ui-bootstrap"
-                            data-sap-ui-libs="sap.m, sap.ui.layout, sap.suite.ui.commons"
-                            data-sap-ui-theme="sap_fiori_3">
-                    </script>
-                    <style>
-                        .sapUiBody {
-                            padding: 1rem;
-                        }
-                        .mandatoryLabel {
-                            color: red;
-                        }
-                        .sapUiSmallMarginTop {
-                            margin-top: 0.5rem;
-                        }
-                    </style>
-                </head>
-                <body class="sapUiBody">
-                    <div id="content"></div>
-                    <script>
-                        sap.ui.getCore().attachInit(function() {
-                            const oData = {
-                                editable: false,
-                                selectedRequest: ${JSON.stringify(oRequest)},
-                                approvers: ${JSON.stringify(oModel.getProperty("/approvers"))},
-                                priceDetails: ${JSON.stringify(oModel.getProperty("/priceDetails"))},
-                                timelineItems: ${JSON.stringify(oModel.getProperty("/timelineItems"))}
-                            };
-                            const oModel = new sap.ui.model.json.JSONModel(oData);
-                            sap.ui.getCore().setModel(oModel);
+                // <!DOCTYPE html>
+                // <html>
+                // <head>
+                //     <title>Price Requisition</title>
+                //     <script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+                //             id="sap-ui-bootstrap"
+                //             data-sap-ui-libs="sap.m, sap.ui.layout, sap.suite.ui.commons"
+                //             data-sap-ui-theme="sap_fiori_3">
+                //     </script>
+                //     <style>
+                //         .sapUiBody {
+                //             padding: 1rem;
+                //         }
+                //         .mandatoryLabel {
+                //             color: red;
+                //         }
+                //         .sapUiSmallMarginTop {
+                //             margin-top: 0.5rem;
+                //         }
+                //     </style>
+                // </head>
+                // <body class="sapUiBody">
+                //     <div id="content"></div>
+                //     <script>
+                //         sap.ui.getCore().attachInit(function() {
+                //             // Define the data model for the new tab
+                //             const oData = {
+                //                 editable: false,
+                //                 selectedRequest: ${JSON.stringify(oRequest)},
+                //                 approvers: ${JSON.stringify(oModel.getProperty("/approvers"))},
+                //                 priceDetails: ${JSON.stringify(oModel.getProperty("/priceDetails"))},
+                //                 timelineItems: ${JSON.stringify(oModel.getProperty("/timelineItems"))}
+                //             };
+                //             const oModel = new sap.ui.model.json.JSONModel(oData);
+                //             sap.ui.getCore().setModel(oModel);
 
-                            const oPanel = new sap.m.Panel({
-                                headerText: "Price Requisition",
-                                content: [
-                                    new sap.m.Toolbar({
-                                        content: [
-                                            new sap.m.ToolbarSpacer(),
-                                            new sap.m.Button({
-                                                icon: "sap-icon://save",
-                                                text: "Save",
-                                                type: "Accept",
-                                                tooltip: "Save Request",
-                                                press: function() {
-                                                    const oSelectedRequest = oModel.getProperty("/selectedRequest");
-                                                    sap.m.MessageToast.show("Request saved: " + oSelectedRequest.requestNo);
-                                                }
-                                            }),
-                                            new sap.m.Button({
-                                                icon: "sap-icon://print",
-                                                text: "Print",
-                                                type: "Default",
-                                                tooltip: "Print Request",
-                                                press: function() {
-                                                    sap.m.MessageToast.show("Printing request...");
-                                                }
-                                            }),
-                                            new sap.m.Button({
-                                                icon: "sap-icon://decline",
-                                                text: "Exit",
-                                                type: "Reject",
-                                                tooltip: "Close Dialog",
-                                                press: function() {
-                                                    window.close();
-                                                }
-                                            }),
-                                            new sap.m.Button({
-                                                icon: "sap-icon://edit",
-                                                text: "Edit",
-                                                type: "Default",
-                                                tooltip: "Toggle Edit Mode",
-                                                press: function() {
-                                                    const bEditable = !oModel.getProperty("/editable");
-                                                    oModel.setProperty("/editable", bEditable);
-                                                    sap.m.MessageToast.show(bEditable ? "Edit mode activated" : "Edit mode deactivated");
-                                                }
-                                            })
-                                        ]
-                                    }),
-                                    new sap.ui.layout.form.SimpleForm({
-                                        layout: "ResponsiveGridLayout",
-                                        editable: "{/editable}",
-                                        content: [
-                                            new sap.m.Panel({
-                                                headerText: "Price Requisition Details",
-                                                expandable: true,
-                                                expanded: true,
-                                                content: [
-                                                    new sap.m.Label({ text: "Fields marked with * are mandatory", design: "Bold", class: "mandatoryLabel sapUiSmallMarginTop" }),
-                                                    new sap.m.Label({ text: "Reference No:*" }),
-                                                    new sap.m.Input({ value: "{/selectedRequest/referenceNo}" }),
-                                                    new sap.m.Label({ text: "Division:*" }),
-                                                    new sap.m.Input({ value: "{/selectedRequest/division}" }),
-                                                    new sap.m.Label({ text: "Created By:" }),
-                                                    new sap.m.Text({ text: "{/selectedRequest/createdBy}" }),
-                                                    new sap.m.Label({ text: "Created Date:" }),
-                                                    new sap.m.Text({ text: "{/selectedRequest/createdOn}" }),
-                                                    new sap.m.Label({ text: "DCNR# form:" }),
-                                                    new sap.m.Input({ value: "{/selectedRequest/dcnrForm}" }),
-                                                    new sap.m.Label({ text: "Status of the Request:" }),
-                                                    new sap.m.Text({ text: "{/selectedRequest/status}" }),
-                                                    new sap.m.Label({ text: "Standard Reason:" }),
-                                                    new sap.m.Input({ value: "{/selectedRequest/standardReason}" }),
-                                                    new sap.m.Label({ text: "Sales Group:" }),
-                                                    new sap.m.Input({ value: "{/selectedRequest/salesGroup}" }),
-                                                    new sap.m.Label({ text: "Comment by Creator:" }),
-                                                    new sap.m.Input({ value: "{/selectedRequest/creatorComment}" }),
-                                                    new sap.m.Label({ text: "DCNR to:" }),
-                                                    new sap.m.Input({ value: "{/selectedRequest/dcnrTo}" })
-                                                ]
-                                            })
-                                        ]
-                                    }),
-                                    new sap.m.Panel({
-                                        headerText: "Uploaded Attachments",
-                                        expandable: true,
-                                        expanded: true,
-                                        class: "sapUiSmallMarginTop",
-                                        content: [
-                                            new sap.m.Table({
-                                                items: "{/selectedRequest/attachments}",
-                                                columns: [
-                                                    new sap.m.Column({ header: new sap.m.Text({ text: "Attachment" }) }),
-                                                    new sap.m.Column({ header: new sap.m.Text({ text: "Action" }) })
-                                                ],
-                                                items: {
-                                                    path: "/selectedRequest/attachments",
-                                                    template: new sap.m.ColumnListItem({
-                                                        cells: [
-                                                            new sap.m.Text({ text: "{fileName}" }),
-                                                            new sap.m.Button({
-                                                                icon: "sap-icon://download",
-                                                                tooltip: "Download",
-                                                                press: function(oEvent) {
-                                                                    const oItem = oEvent.getSource().getBindingContext().getObject();
-                                                                    sap.m.MessageToast.show("Downloading file: " + oItem.fileName);
-                                                                }
-                                                            })
-                                                        ]
-                                                    })
-                                                }
-                                            })
-                                        ]
-                                    }),
-                                    new sap.m.Panel({
-                                        headerText: "Division Section Table",
-                                        expandable: true,
-                                        expanded: true,
-                                        class: "sapUiSmallMarginTop",
-                                        content: [
-                                            new sap.m.Table({
-                                                items: "{/approvers}",
-                                                columns: [
-                                                    new sap.m.Column({ header: new sap.m.Text({ text: "Role" }) }),
-                                                    new sap.m.Column({ header: new sap.m.Text({ text: "Approver" }) }),
-                                                    new sap.m.Column({ header: new sap.m.Text({ text: "Role" }) }),
-                                                    new sap.m.Column({ header: new sap.m.Text({ text: "Approver" }) })
-                                                ],
-                                                items: {
-                                                    path: "/approvers",
-                                                    template: new sap.m.ColumnListItem({
-                                                        cells: [
-                                                            new sap.m.Text({ text: "{role1}" }),
-                                                            new sap.m.Text({ text: "{approver1}" }),
-                                                            new sap.m.Text({ text: "{role2}" }),
-                                                            new sap.m.Text({ text: "{approver2}" })
-                                                        ]
-                                                    })
-                                                }
-                                            })
-                                        ]
-                                    }),
-                                    new sap.m.IconTabBar({
-                                        expandable: false,
-                                        class: "sapUiSmallMarginTop",
-                                        items: [
-                                            new sap.m.IconTabFilter({
-                                                text: "Price Details",
-                                                key: "priceDetails",
-                                                content: [
-                                                    new sap.m.Table({
-                                                        items: "{/priceDetails}",
-                                                        columns: [
-                                                            new sap.m.Column({ header: new sap.m.Text({ text: "Material" }) }),
-                                                            new sap.m.Column({ header: new sap.m.Text({ text: "Price List" }) }),
-                                                            new sap.m.Column({ header: new sap.m.Text({ text: "Price List Description" }) }),
-                                                            new sap.m.Column({ header: new sap.m.Text({ text: "UoM" }) }),
-                                                            new sap.m.Column({ header: new sap.m.Text({ text: "Indicative MRP" }) }),
-                                                            new sap.m.Column({ header: new sap.m.Text({ text: "Start Date" }) }),
-                                                            new sap.m.Column({ header: new sap.m.Text({ text: "End Date" }) }),
-                                                            new sap.m.Column({ header: new sap.m.Text({ text: "Default Price for Lot Material" }) })
-                                                        ],
-                                                        items: {
-                                                            path: "/priceDetails",
-                                                            template: new sap.m.ColumnListItem({
-                                                                cells: [
-                                                                    new sap.m.Text({ text: "{material}" }),
-                                                                    new sap.m.Text({ text: "{priceList}" }),
-                                                                    new sap.m.Text({ text: "{priceListDescription}" }),
-                                                                    new sap.m.Text({ text: "{uom}" }),
-                                                                    new sap.m.Text({ text: "{indicativeMRP}" }),
-                                                                    new sap.m.Text({ text: "{startDate}" }),
-                                                                    new sap.m.Text({ text: "{endDate}" }),
-                                                                    new sap.m.Text({ text: "{defaultPrice}" })
-                                                                ]
-                                                            })
-                                                        }
-                                                    })
-                                                ]
-                                            }),
-                                            new sap.m.IconTabFilter({
-                                                text: "Timeline",
-                                                key: "timeline",
-                                                content: [
-                                                    new sap.suite.ui.commons.Timeline({
-                                                        enableScroll: true,
-                                                        content: {
-                                                            path: "/timelineItems",
-                                                            template: new sap.suite.ui.commons.TimelineItem({
-                                                                dateTime: "{dateTime}",
-                                                                title: "{title}",
-                                                                text: "{text}",
-                                                                userName: "{userName}",
-                                                                userPicture: "{userPicture}",
-                                                                icon: "sap-icon://history"
-                                                            })
-                                                        }
-                                                    })
-                                                ]
-                                            })
-                                        ],
-                                        select: function(oEvent) {
-                                            const sKey = oEvent.getParameter("key");
-                                            sap.m.MessageToast.show("Selected details tab: " + sKey);
-                                        }
-                                    }),
-                                    new sap.m.HBox({
-                                        justifyContent: "End",
-                                        items: [
-                                            new sap.m.Button({
-                                                text: "Submit",
-                                                type: "Emphasized",
-                                                visible: "{/editable}",
-                                                press: function() {
-                                                    const oSelectedRequest = oModel.getProperty("/selectedRequest");
-                                                    oSelectedRequest.status = "Pending Request";
-                                                    oSelectedRequest.pendingWith = "next-approver@example.com";
-                                                    oModel.setProperty("/selectedRequest", oSelectedRequest);
-                                                    oModel.setProperty("/editable", false);
-                                                    sap.m.MessageToast.show("Request submitted successfully");
-                                                }
-                                            }),
-                                            new sap.m.Button({
-                                                text: "Close",
-                                                type: "Reject",
-                                                press: function() {
-                                                    window.close();
-                                                }
-                                            })
-                                        ]
-                                    })
-                                ]
-                            }).placeAt("content");
-                        });
-                    </script>
-                </body>
-                </html>
+                //             // Create the panel structure
+                //             const oPanel = new sap.m.Panel({
+                //                 headerText: "Price Requisition",
+                //                 content: [
+                //                     new sap.m.Toolbar({
+                //                         content: [
+                //                             new sap.m.ToolbarSpacer(),
+                //                             new sap.m.Button({
+                //                                 icon: "sap-icon://save",
+                //                                 text: "Save",
+                //                                 type: "Accept",
+                //                                 tooltip: "Save Request",
+                //                                 press: function() {
+                //                                     const oSelectedRequest = oModel.getProperty("/selectedRequest");
+                //                                     sap.m.MessageToast.show("Request saved: " + oSelectedRequest.requestNo);
+                //                                 }
+                //                             }),
+                //                             new sap.m.Button({
+                //                                 icon: "sap-icon://print",
+                //                                 text: "Print",
+                //                                 type: "Default",
+                //                                 tooltip: "Print Request",
+                //                                 press: function() {
+                //                                     sap.m.MessageToast.show("Printing request...");
+                //                                 }
+                //                             }),
+                //                             new sap.m.Button({
+                //                                 icon: "sap-icon://decline",
+                //                                 text: "Exit",
+                //                                 type: "Reject",
+                //                                 tooltip: "Close Dialog",
+                //                                 press: function() {
+                //                                     window.close();
+                //                                 }
+                //                             }),
+                //                             new sap.m.Button({
+                //                                 icon: "sap-icon://edit",
+                //                                 text: "Edit",
+                //                                 type: "Default",
+                //                                 tooltip: "Toggle Edit Mode",
+                //                                 press: function() {
+                //                                     const bEditable = !oModel.getProperty("/editable");
+                //                                     oModel.setProperty("/editable", bEditable);
+                //                                     sap.m.MessageToast.show(bEditable ? "Edit mode activated" : "Edit mode deactivated");
+                //                                 }
+                //                             })
+                //                         ]
+                //                     }),
+                //                     new sap.ui.layout.form.SimpleForm({
+                //                         layout: "ResponsiveGridLayout",
+                //                         editable: "{/editable}",
+                //                         content: [
+                //                             new sap.m.Panel({
+                //                                 headerText: "Price Requisition Details",
+                //                                 expandable: true,
+                //                                 expanded: true,
+                //                                 content: [
+                //                                     new sap.m.Label({ text: "Fields marked with * are mandatory", design: "Bold", class: "mandatoryLabel sapUiSmallMarginTop" }),
+                //                                     new sap.m.Label({ text: "Reference No:*" }),
+                //                                     new sap.m.Input({ value: "{/selectedRequest/referenceNo}" }),
+                //                                     new sap.m.Label({ text: "Division:*" }),
+                //                                     new sap.m.Input({ value: "{/selectedRequest/division}" }),
+                //                                     new sap.m.Label({ text: "Created By:" }),
+                //                                     new sap.m.Text({ text: "{/selectedRequest/createdBy}" }),
+                //                                     new sap.m.Label({ text: "Created Date:" }),
+                //                                     new sap.m.Text({ text: "{/selectedRequest/createdOn}" }),
+                //                                     new sap.m.Label({ text: "DCNR# form:" }),
+                //                                     new sap.m.Input({ value: "{/selectedRequest/dcnrForm}" }),
+                //                                     new sap.m.Label({ text: "Status of the Request:" }),
+                //                                     new sap.m.Text({ text: "{/selectedRequest/status}" }),
+                //                                     new sap.m.Label({ text: "Standard Reason:" }),
+                //                                     new sap.m.Input({ value: "{/selectedRequest/standardReason}" }),
+                //                                     new sap.m.Label({ text: "Sales Group:" }),
+                //                                     new sap.m.Input({ value: "{/selectedRequest/salesGroup}" }),
+                //                                     new sap.m.Label({ text: "Comment by Creator:" }),
+                //                                     new sap.m.Input({ value: "{/selectedRequest/creatorComment}" }),
+                //                                     new sap.m.Label({ text: "DCNR to:" }),
+                //                                     new sap.m.Input({ value: "{/selectedRequest/dcnrTo}" })
+                //                                 ]
+                //                             })
+                //                         ]
+                //                     }),
+                //                     new sap.m.Panel({
+                //                         headerText: "Uploaded Attachments",
+                //                         expandable: true,
+                //                         expanded: true,
+                //                         class: "sapUiSmallMarginTop",
+                //                         content: [
+                //                             new sap.m.Table({
+                //                                 items: "{/selectedRequest/attachments}",
+                //                                 columns: [
+                //                                     new sap.m.Column({ header: new sap.m.Text({ text: "Attachment" }) }),
+                //                                     new sap.m.Column({ header: new sap.m.Text({ text: "Action" }) })
+                //                                 ],
+                //                                 items: {
+                //                                     path: "/selectedRequest/attachments",
+                //                                     template: new sap.m.ColumnListItem({
+                //                                         cells: [
+                //                                             new sap.m.Text({ text: "{fileName}" }),
+                //                                             new sap.m.Button({
+                //                                                 icon: "sap-icon://download",
+                //                                                 tooltip: "Download",
+                //                                                 press: function(oEvent) {
+                //                                                     const oItem = oEvent.getSource().getBindingContext().getObject();
+                //                                                     sap.m.MessageToast.show("Downloading file: " + oItem.fileName);
+                //                                                 }
+                //                                             })
+                //                                         ]
+                //                                     })
+                //                                 }
+                //                             })
+                //                         ]
+                //                     }),
+                //                     new sap.m.Panel({
+                //                         headerText: "Division Section Table",
+                //                         expandable: true,
+                //                         expanded: true,
+                //                         class: "sapUiSmallMarginTop",
+                //                         content: [
+                //                             new sap.m.Table({
+                //                                 items: "{/approvers}",
+                //                                 columns: [
+                //                                     new sap.m.Column({ header: new sap.m.Text({ text: "Role" }) }),
+                //                                     new sap.m.Column({ header: new sap.m.Text({ text: "Approver" }) }),
+                //                                     new sap.m.Column({ header: new sap.m.Text({ text: "Role" }) }),
+                //                                     new sap.m.Column({ header: new sap.m.Text({ text: "Approver" }) })
+                //                                 ],
+                //                                 items: {
+                //                                     path: "/approvers",
+                //                                     template: new sap.m.ColumnListItem({
+                //                                         cells: [
+                //                                             new sap.m.Text({ text: "{role1}" }),
+                //                                             new sap.m.Text({ text: "{approver1}" }),
+                //                                             new sap.m.Text({ text: "{role2}" }),
+                //                                             new sap.m.Text({ text: "{approver2}" })
+                //                                         ]
+                //                                     })
+                //                                 }
+                //                             })
+                //                         ]
+                //                     }),
+                //                     new sap.m.IconTabBar({
+                //                         expandable: false,
+                //                         class: "sapUiSmallMarginTop",
+                //                         items: [
+                //                             new sap.m.IconTabFilter({
+                //                                 text: "Price Details",
+                //                                 key: "priceDetails",
+                //                                 content: [
+                //                                     new sap.m.Table({
+                //                                         items: "{/priceDetails}",
+                //                                         columns: [
+                //                                             new sap.m.Column({ header: new sap.m.Text({ text: "Material" }) }),
+                //                                             new sap.m.Column({ header: new sap.m.Text({ text: "Price List" }) }),
+                //                                             new sap.m.Column({ header: new sap.m.Text({ text: "Price List Description" }) }),
+                //                                             new sap.m.Column({ header: new sap.m.Text({ text: "UoM" }) }),
+                //                                             new sap.m.Column({ header: new sap.m.Text({ text: "Indicative MRP" }) }),
+                //                                             new sap.m.Column({ header: new sap.m.Text({ text: "Start Date" }) }),
+                //                                             new sap.m.Column({ header: new sap.m.Text({ text: "End Date" }) }),
+                //                                             new sap.m.Column({ header: new sap.m.Text({ text: "Default Price for Lot Material" }) })
+                //                                         ],
+                //                                         items: {
+                //                                             path: "/priceDetails",
+                //                                             template: new sap.m.ColumnListItem({
+                //                                                 cells: [
+                //                                                     new sap.m.Text({ text: "{material}" }),
+                //                                                     new sap.m.Text({ text: "{priceList}" }),
+                //                                                     new sap.m.Text({ text: "{priceListDescription}" }),
+                //                                                     new sap.m.Text({ text: "{uom}" }),
+                //                                                     new sap.m.Text({ text: "{indicativeMRP}" }),
+                //                                                     new sap.m.Text({ text: "{startDate}" }),
+                //                                                     new sap.m.Text({ text: "{endDate}" }),
+                //                                                     new sap.m.Text({ text: "{defaultPrice}" })
+                //                                                 ]
+                //                                             })
+                //                                         }
+                //                                     })
+                //                                 ]
+                //                             }),
+                //                             new sap.m.IconTabFilter({
+                //                                 text: "Timeline",
+                //                                 key: "timeline",
+                //                                 content: [
+                //                                     new sap.suite.ui.commons.Timeline({
+                //                                         enableScroll: true,
+                //                                         showHeaderBar: false,
+                //                                         enableDoubleSided: true,
+                //                                         content: {
+                //                                             path: "/timelineItems",
+                //                                             template: new sap.suite.ui.commons.TimelineItem({
+                //                                                 dateTime: "{dateTime}",
+                //                                                 title: "{title}",
+                //                                                 text: "{text}",
+                //                                                 userName: "{userName}",
+                //                                                 userPicture: "{userPicture}",
+                //                                                 icon: "sap-icon://history"
+                //                                             })
+                //                                         }
+                //                                     })
+                //                                 ]
+                //                             })
+                //                         ],
+                //                         select: function(oEvent) {
+                //                             const sKey = oEvent.getParameter("key");
+                //                             sap.m.MessageToast.show("Selected details tab: " + sKey);
+                //                         }
+                //                     }),
+                //                     new sap.m.HBox({
+                //                         justifyContent: "End",
+                //                         items: [
+                //                             new sap.m.Button({
+                //                                 text: "Submit",
+                //                                 type: "Emphasized",
+                //                                 visible: "{/editable}",
+                //                                 press: function() {
+                //                                     const oSelectedRequest = oModel.getProperty("/selectedRequest");
+                //                                     oSelectedRequest.status = "Pending Request";
+                //                                     oSelectedRequest.pendingWith = "next-approver@example.com";
+                //                                     oModel.setProperty("/selectedRequest", oSelectedRequest);
+                //                                     oModel.setProperty("/editable", false);
+                //                                     sap.m.MessageToast.show("Request submitted successfully");
+                //                                 }
+                //                             }),
+                //                             new sap.m.Button({
+                //                                 text: "Close",
+                //                                 type: "Reject",
+                //                                 press: function() {
+                //                                     window.close();
+                //                                 }
+                //                             })
+                //                         ]
+                //                     })
+                //                 ]
+                //             }).placeAt("content");
+                //         });
+                //     </script>
+                // </body>
+                // </html>
             `);
         },
 
