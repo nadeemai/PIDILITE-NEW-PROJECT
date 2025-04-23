@@ -1,5 +1,5 @@
 
-UPDATED VIEW.XML CODE 2 
+///UPDATED VIEW.XML CODE 2//// 
 
 <mvc:View
     controllerName="com.tableentry.tablestructure.controller.Table_Entry"
