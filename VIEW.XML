@@ -74,7 +74,7 @@
             <!-- Icon Tab Bar with Create Button -->
             <IconTabBar id="requestsTabBar" select="onTabSelect" expandable="false" class="sapUiResponsiveMargin">
                 <items>
-                    <IconTabFilter text="Requests" key="all" count="{/allCount}">
+                    <IconTabFilter text="Requests" key="all">
                         <VBox>
                             <Toolbar>
                                 <Button icon="sap-icon://add" text="Create New Request" press="onCreatePress" type="Emphasized"/>
@@ -199,7 +199,7 @@
                                     </Table>
                                 </IconTabFilter>
                                 <IconTabFilter text="Timeline" key="timeline">
-                                    <suite:Timeline id="detailsTimeline" enableScroll="true" content="{/timelineItems}">
+                                    <suite:Timeline id="detailsTimeline" enableScroll="true" content="{/timelineItems}" showHeaderBar="false" enableDoubleSided="true">
                                         <suite:TimelineItem
                                             dateTime="{dateTime}"
                                             title="{title}"
@@ -274,7 +274,6 @@
         </VBox>
     </Panel>
 </mvc:View>
-
 
 
 UPDATED VIEW.XML CODE
