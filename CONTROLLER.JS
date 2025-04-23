@@ -1,3 +1,526 @@
+
+UPDATED CONTROLLER.JS 
+
+sap.ui.define([
+    "sap/ui/core/mvc/Controller",
+    "sap/m/MessageBox",
+    "sap/m/MessageToast",
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
+    "sap/ui/core/format/DateFormat"
+], function (Controller, MessageBox, MessageToast, JSONModel, Filter, FilterOperator, DateFormat) {
+    "use strict";
+
+    return Controller.extend("com.tableentry.tablestructure.controller.Table_Entry", {
+        onInit: function () {
+            const oData = {
+                draftCount: 0,
+                sentBackCount: 1,
+                rejectedCount: 1,
+                inProgressCount: 2,
+                allCount: 4,
+                editable: false,
+                filter: {
+                    requestNo: "",
+                    createdBy: "",
+                    createdOn: "",
+                    status: ""
+                },
+                statusItems: [
+                    { key: "", text: "All" },
+                    { key: "Draft", text: "Draft" },
+                    { key: "Send Back", text: "Send Back" },
+                    { key: "Rejected", text: "Rejected" },
+                    { key: "Pending Request", text: "Pending Request" }
+                ],
+                requestTypes: [
+                    { key: "TYPE1", text: "Type 1 Request" },
+                    { key: "TYPE2", text: "Type 2 Request" },
+                    { key: "TYPE3", text: "Type 3 Request" }
+                ],
+                newRequest: {
+                    type: "",
+                    description: "",
+                    file: null
+                },
+                uploadedFiles: [
+                    {
+                        fileName: "PDF for justification - Email"
+                    }
+                ],
+                uploadedFilesCount: 1,
+                requests: [
+                    { 
+                        requestNo: "RM00000001",
+                        createdBy: "Buyer",
+                        createdOn: "Feb 02, 2025",
+                        status: "Send Back",
+                        remarks: "-",
+                        pendingWith: "-",
+                        requestAging: "15 Days",
+                        referenceNo: "RM00000001",
+                        division: "Division 1",
+                        dcnrForm: "Form 123",
+                        standardReason: "Price Change",
+                        salesGroup: "Group A",
+                        creatorComment: "Initial request",
+                        dcnrTo: "Finance"
+                    },
+                    { 
+                        requestNo: "RM00000002",
+                        createdBy: "Buyer",
+                        createdOn: "Feb 02, 2025",
+                        status: "Send Back",
+                        remarks: "-",
+                        pendingWith: "-",
+                        requestAging: "15 Days",
+                        referenceNo: "RM00000002",
+                        division: "Division 1",
+                        dcnrForm: "Form 123",
+                        standardReason: "Price Change",
+                        salesGroup: "Group A",
+                        creatorComment: "Initial request",
+                        dcnrTo: "Finance"
+                    },
+                    { 
+                        requestNo: "RM00000003",
+                        createdBy: "Buyer",
+                        createdOn: "Feb 02, 2025",
+                        status: "Send Back",
+                        remarks: "-",
+                        pendingWith: "-",
+                        requestAging: "15 Days",
+                        referenceNo: "RM00000003",
+                        division: "Division 1",
+                        dcnrForm: "Form 123",
+                        standardReason: "Price Change",
+                        salesGroup: "Group A",
+                        creatorComment: "Initial request",
+                        dcnrTo: "Finance"
+                    },
+                    { 
+                        requestNo: "RM00000004",
+                        createdBy: "Buyer",
+                        createdOn: "Feb 02, 2025",
+                        status: "Send Back",
+                        remarks: "-",
+                        pendingWith: "-",
+                        requestAging: "15 Days",
+                        referenceNo: "RM00000004",
+                        division: "Division 1",
+                        dcnrForm: "Form 123",
+                        standardReason: "Price Change",
+                        salesGroup: "Group A",
+                        creatorComment: "Initial request",
+                        dcnrTo: "Finance"
+                    },
+                    { 
+                        requestNo: "RM00000005",
+                        createdBy: "Buyer",
+                        createdOn: "Feb 02, 2025",
+                        status: "Pending Request",
+                        remarks: "-",
+                        pendingWith: "user3@pellme.com",
+                        requestAging: "15 Days",
+                        referenceNo: "RM00000005",
+                        division: "Division 2",
+                        dcnrForm: "Form 456",
+                        standardReason: "New Product",
+                        salesGroup: "Group B",
+                        creatorComment: "Urgent request",
+                        dcnrTo: "Sales"
+                    }
+                ],
+                approvers: [
+                    {
+                        role1: "Approver 1",
+                        approver1: "ayush.jha@sumo",
+                        role2: "Alternate Approver 1",
+                        approver2: "tani.singh@sumo"
+                    },
+                    {
+                        role1: "Approver 2",
+                        approver1: "ayushi.khanolkar@sumo",
+                        role2: "Alternate Approver 2",
+                        approver2: "aakib.mohd@sumo"
+                    },
+                    {
+                        role1: "Approver 3",
+                        approver1: "yugal.kishore@sumo",
+                        role2: "Alternate Approver 3",
+                        approver2: "sumit.jhadjiyal@sumo"
+                    }
+                ],
+                timelineItems: [
+                    {
+                        dateTime: "7/22/2016 at 3:00 PM",
+                        title: "John Miller added a note",
+                        text: "Sample Text for a note type item. Lorem ipsumlor sit amet.",
+                        userName: "John Miller",
+                        userPicture: "https://ui-avatars.com/api/?name=John+Miller"
+                    },
+                    {
+                        dateTime: "7/22/2016 at 2:56 PM",
+                        title: "John Miller added a call log",
+                        text: "Sample Text for a note type item. Lorem ipsumlor sit amet.",
+                        userName: "John Miller",
+                        userPicture: "https://ui-avatars.com/api/?name=John+Miller"
+                    },
+                    {
+                        dateTime: "6/20/2016 at 5:32 PM",
+                        title: "Denise Smith added an invoice",
+                        text: "INVOICE (37483)\n199.00 USD\nOverdue\nOPEN IN MANAGE INVOICES APP",
+                        userName: "Denise Smith",
+                        userPicture: "https://ui-avatars.com/api/?name=Denise+Smith"
+                    },
+                    {
+                        dateTime: "7/14/2016 at 12:41 AM",
+                        title: "Denise Smith",
+                        text: "Lorem ipsum dolor sit amet, elit. Aeneancommodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec.\nMARK AS INAPPROPRIATE",
+                        userName: "Denise Smith",
+                        userPicture: "https://ui-avatars.com/api/?name=Denise+Smith"
+                    },
+                    {
+                        dateTime: "7/14/2016 at 11:14 PM",
+                        title: "Michael Adams",
+                        text: "Maecenas nec odio et ante tincidunt. Donec vitae sapien ut libero venenatis faucibus. Nulla quis ante. Etiam sit amet orci eget eros faucibus tincidunt.\nMARK AS INAPPROPRIATE",
+                        userName: "Michael Adams",
+                        userPicture: "https://ui-avatars.com/api/?name=Michael+Adams"
+                    },
+                    {
+                        dateTime: "7/14/2016 at 10:37 AM",
+                        title: "Denise Smith updated profitability to 75%",
+                        text: "Probably from 50% to 75%\nSales Lead (46115162342)\nDelBolt Industries\nOPEN IN MY LEADS APP",
+                        userName: "Denise Smith",
+                        userPicture: "https://ui-avatars.com/api/?name=Denise+Smith"
+                    },
+                    {
+                        dateTime: "7/14/2016 at 1:59 PM",
+                        title: "John Miller",
+                        text: "Donec quam felis, ultricies nec, pellentesque eu. Nulla consequat massa quis enim. Donec pede justo, fringilla vel. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus.",
+                        userName: "John Miller",
+                        userPicture: "https://ui-avatars.com/api/?name=John+Miller"
+                    },
+                    {
+                        dateTime: "7/14/2016 at 11:00 PM",
+                        title: "Outlook task",
+                        text: "Quisque rutrum. Aenean imperdiet. Etiam ultricies nisin, dapibus dictum.\nCurabitur ullamcorper ultricies nisin.",
+                        userName: "Outlook Task",
+                        userPicture: "https://ui-avatars.com/api/?name=Outlook+Task"
+                    }
+                ],
+                priceDetails: [
+                    {
+                        material: "",
+                        priceList: "",
+                        priceListDescription: "",
+                        uom: "",
+                        indicativeMRP: "",
+                        startDate: "",
+                        endDate: "",
+                        defaultPrice: ""
+                    }
+                ],
+                selectedRequest: {}
+            };
+
+            const oModel = new JSONModel(oData);
+            this.getView().setModel(oModel);
+            this._updateCounts();
+        },
+
+        onTilePress: function(oEvent) {
+            const sHeader = oEvent.getSource().getHeader();
+            const oTable = this.byId("dashboardTable");
+            const oBinding = oTable.getBinding("items");
+            
+            let aFilters = [];
+            switch(sHeader) {
+                case "My Draft Requests":
+                    aFilters.push(new Filter("status", FilterOperator.EQ, "Draft"));
+                    break;
+                case "Sent Back Requests":
+                    aFilters.push(new Filter("status", FilterOperator.EQ, "Send Back"));
+                    break;
+                case "Rejected Requests":
+                    aFilters.push(new Filter("status", FilterOperator.EQ, "Rejected"));
+                    break;
+                case "In-Progress Requests":
+                    aFilters.push(new Filter("status", FilterOperator.EQ, "Pending Request"));
+                    break;
+            }
+            
+            oBinding.filter(aFilters);
+            MessageToast.show(`Filtered by ${sHeader}`);
+        },
+
+        onFilterChange: function() {
+            const oTable = this.byId("dashboardTable");
+            const oBinding = oTable.getBinding("items");
+            const oModel = this.getView().getModel();
+            const oFilters = oModel.getProperty("/filter");
+            
+            let aFilters = [];
+            
+            if (oFilters.requestNo) {
+                aFilters.push(new Filter("requestNo", FilterOperator.Contains, oFilters.requestNo));
+            }
+            
+            if (oFilters.createdBy) {
+                aFilters.push(new Filter("createdBy", FilterOperator.Contains, oFilters.createdBy));
+            }
+            
+            if (oFilters.createdOn) {
+                aFilters.push(new Filter("createdOn", FilterOperator.EQ, oFilters.createdOn));
+            }
+            
+            if (oFilters.status) {
+                aFilters.push(new Filter("status", FilterOperator.EQ, oFilters.status));
+            }
+            
+            oBinding.filter(aFilters);
+        },
+
+        onClearFilters: function() {
+            const oModel = this.getView().getModel();
+            oModel.setProperty("/filter", {
+                requestNo: "",
+                createdBy: "",
+                createdOn: "",
+                status: ""
+            });
+            
+            this.onFilterChange();
+            MessageToast.show("Filters cleared");
+        },
+
+        onCreatePress: function() {
+            this.getView().getModel().setProperty("/newRequest", {
+                type: "",
+                description: "",
+                file: null
+            });
+            
+            this.byId("createRequestDialog").open();
+        },
+
+        onCreateRequest: function() {
+            const oModel = this.getView().getModel();
+            const oNewRequest = oModel.getProperty("/newRequest");
+            
+            const aRequests = oModel.getProperty("/requests");
+            const iNewId = aRequests.length + 1;
+            const sNewRequestNo = "RM" + String(iNewId).padStart(7, "0");
+            
+            const oDateFormat = DateFormat.getDateInstance({style: "medium"});
+            const sCurrentDate = oDateFormat.format(new Date());
+            
+            const oRequest = {
+                requestNo: sNewRequestNo,
+                createdBy: "Current User",
+                createdOn: sCurrentDate,
+                status: "Draft",
+                remarks: oNewRequest.description || "-",
+                pendingWith: "-",
+                requestAging: "0 Days",
+                referenceNo: sNewRequestNo,
+                division: "",
+                dcnrForm: "",
+                standardReason: "",
+                salesGroup: "",
+                creatorComment: "",
+                dcnrTo: ""
+            };
+            
+            aRequests.unshift(oRequest);
+            oModel.setProperty("/requests", aRequests);
+            
+            this._updateCounts();
+            
+            this.byId("createRequestDialog").close();
+            MessageToast.show("Request created successfully");
+            
+            oModel.setProperty("/selectedRequest", JSON.parse(JSON.stringify(oRequest)));
+            
+            // Open the request details in a new tab
+            const oDialog = this.byId("requestDetailsDialog");
+            const oDialogContent = oDialog.getContent()[0]; // Get the panel inside the dialog
+            
+            // Create a new window
+            const oNewWindow = window.open("", "_blank");
+            
+            // Write the dialog content to the new window
+            oNewWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Price Requisition</title>
+                    <script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+                            id="sap-ui-bootstrap"
+                            data-sap-ui-libs="sap.m, sap.ui.layout, sap.suite.ui.commons"
+                            data-sap-ui-theme="sap_fiori_3">
+                    </script>
+                    <style>
+                        .sapUiBody {
+                            padding: 1rem;
+                        }
+                    </style>
+                </head>
+                <body class="sapUiBody">
+                    <div id="content"></div>
+                    <script>
+                        sap.ui.getCore().attachInit(function() {
+                            new sap.m.Shell({
+                                app: new sap.ui.core.ComponentContainer({
+                                    name: "com.tableentry.tablestructure"
+                                })
+                            }).placeAt("content");
+                        });
+                    </script>
+                </body>
+                </html>
+            `);
+            
+            // Attach the dialog content to the new window (simplified for this example)
+            oNewWindow.document.getElementById("content").innerHTML = oDialogContent.getDomRef().outerHTML;
+        },
+
+        onCancelCreate: function() {
+            this.byId("createRequestDialog").close();
+        },
+
+        onItemPress: function(oEvent) {
+            const oItem = oEvent.getParameter("listItem");
+            const oContext = oItem.getBindingContext();
+            const oData = oContext.getObject();
+            
+            const oSelectedRequest = JSON.parse(JSON.stringify(oData));
+            this.getView().getModel().setProperty("/selectedRequest", oSelectedRequest);
+            
+            this.getView().byId("requestDetailsDialog").open();
+        },
+
+        onSaveRequest: function() {
+            const oModel = this.getView().getModel();
+            const oSelectedRequest = oModel.getProperty("/selectedRequest");
+            
+            const aRequests = oModel.getProperty("/requests");
+            const iIndex = aRequests.findIndex(req => req.requestNo === oSelectedRequest.requestNo);
+            if (iIndex >= 0) {
+                aRequests[iIndex] = oSelectedRequest;
+                oModel.setProperty("/requests", aRequests);
+            }
+            
+            MessageToast.show("Request saved successfully");
+        },
+
+        onSubmitRequest: function() {
+            const oModel = this.getView().getModel();
+            const oSelectedRequest = oModel.getProperty("/selectedRequest");
+            
+            oSelectedRequest.status = "Pending Request";
+            oSelectedRequest.pendingWith = "next-approver@example.com";
+            
+            const aRequests = oModel.getProperty("/requests");
+            const iIndex = aRequests.findIndex(req => req.requestNo === oSelectedRequest.requestNo);
+            if (iIndex >= 0) {
+                aRequests[iIndex] = oSelectedRequest;
+                oModel.setProperty("/requests", aRequests);
+            }
+            
+            this._updateCounts();
+            oModel.setProperty("/editable", false);
+            MessageToast.show("Request submitted successfully");
+            this.getView().byId("requestDetailsDialog").close();
+        },
+
+        onPrintRequest: function() {
+            MessageToast.show("Printing request...");
+        },
+
+        onCloseRequest: function() {
+            const oModel = this.getView().getModel();
+            oModel.setProperty("/editable", false);
+            this.getView().byId("requestDetailsDialog").close();
+        },
+
+        onEditRequest: function() {
+            const oModel = this.getView().getModel();
+            const bEditable = !oModel.getProperty("/editable");
+            oModel.setProperty("/editable", bEditable);
+            MessageToast.show(bEditable ? "Edit mode activated" : "Edit mode deactivated");
+        },
+
+        handleUploadComplete: function(oEvent) {
+            const sResponse = oEvent.getParameters().response;
+            const iHttpStatusCode = parseInt(/\d{3}/.exec(sResponse) ? /\d{3}/.exec(sResponse)[0] : 0);
+            const sMessage = iHttpStatusCode === 200 ? "File upload complete (Success)" : "File upload failed (Error)";
+            MessageToast.show(sMessage);
+        },
+
+        handleValueChange: function(oEvent) {
+            const sFileName = oEvent.getParameter("newValue");
+            const oModel = this.getView().getModel();
+            const aUploadedFiles = oModel.getProperty("/uploadedFiles");
+            aUploadedFiles.push({ fileName: sFileName });
+            oModel.setProperty("/uploadedFiles", aUploadedFiles);
+            oModel.setProperty("/uploadedFilesCount", aUploadedFiles.length);
+            MessageToast.show("File selected: " + sFileName);
+        },
+
+        onDownloadFile: function(oEvent) {
+            const oItem = oEvent.getSource().getBindingContext().getObject();
+            MessageToast.show("Downloading file: " + oItem.fileName);
+            // In a real application, you would implement the actual download logic here
+        },
+
+        handleTypeMissmatch: function(oEvent) {
+            const aFileTypes = oEvent.getSource().getFileType().map(sType => "*." + sType);
+            MessageToast.show(`The file type *.${oEvent.getParameter("fileType")} is not supported. Choose one of the following types: ${aFileTypes.join(", ")}`);
+        },
+
+        _updateCounts: function() {
+            const oModel = this.getView().getModel();
+            const aRequests = oModel.getProperty("/requests");
+            
+            const oCounts = {
+                draftCount: aRequests.filter(r => r.status === "Draft").length,
+                sentBackCount: aRequests.filter(r => r.status === "Send Back").length,
+                rejectedCount: aRequests.filter(r => r.status === "Rejected").length,
+                inProgressCount: aRequests.filter(r => r.status === "Pending Request").length,
+                allCount: aRequests.length
+            };
+            
+            oModel.setProperty("/draftCount", oCounts.draftCount);
+            oModel.setProperty("/sentBackCount", oCounts.sentBackCount);
+            oModel.setProperty("/rejectedCount", oCounts.rejectedCount);
+            oModel.setProperty("/inProgressCount", oCounts.inProgressCount);
+            oModel.setProperty("/allCount", oCounts.allCount);
+        },
+
+        onTabSelect: function(oEvent) {
+            const sKey = oEvent.getParameter("key");
+            const oTable = this.byId("dashboardTable");
+            const oBinding = oTable.getBinding("items");
+            oBinding.filter([]);
+            MessageToast.show(`Selected tab: ${sKey}`);
+        },
+
+        onDetailsTabSelect: function(oEvent) {
+            const sKey = oEvent.getParameter("key");
+            MessageToast.show(`Selected details tab: ${sKey}`);
+        }
+    });
+});
+
+
+
+
+
+
+
+CONTROLLER.JS
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
