@@ -230,33 +230,18 @@ sap.ui.define([
                 microProcessItems: [
                     { 
                         state: "Success", 
-                        icon: "sap-icon://accept",
-                        title: "Step 1: Request Created",
-                        description: "Request was created by the buyer"
+                        text: "③",
+                        tooltip: "Step 1: Request Created"
                     },
                     { 
                         state: "Success", 
-                        icon: "sap-icon://accept",
-                        title: "Step 2: First Approval",
-                        description: "Approved by department head"
+                        text: "④",
+                        tooltip: "Step 2: First Approval"
                     },
                     { 
                         state: "Success", 
-                        icon: "sap-icon://accept",
-                        title: "Step 3: Second Approval",
-                        description: "Approved by finance team"
-                    },
-                    { 
-                        state: "Information", 
-                        icon: "sap-icon://pending",
-                        title: "Step 4: Final Approval",
-                        description: "Pending with final approver"
-                    },
-                    { 
-                        state: "None", 
-                        icon: "sap-icon://status-inactive",
-                        title: "Step 5: Completion",
-                        description: "Waiting for previous steps"
+                        text: "⑤",
+                        tooltip: "Step 3: Final Approval"
                     }
                 ],
                 selectedRequest: {}
@@ -265,6 +250,17 @@ sap.ui.define([
             const oModel = new JSONModel(oData);
             this.getView().setModel(oModel);
             this._updateCounts();
+            this._initMicroProcessFlow();
+        },
+
+        _initMicroProcessFlow: function() {
+            const oMicroProcessFlow = this.byId("microProcessFlow");
+            if (oMicroProcessFlow) {
+                const aItems = oMicroProcessFlow.getContent();
+                aItems.forEach(function(oItem) {
+                    oItem.addStyleClass("customProcessStep");
+                });
+            }
         },
 
         onTilePress: function(oEvent) {
@@ -548,42 +544,20 @@ sap.ui.define([
 
         onMicroProcessItemPress: function(oEvent) {
             const oItem = oEvent.getSource();
-            const oContext = oItem.getBindingContext();
-            const oData = oContext.getObject();
+            const sTooltip = oItem.getTooltip();
             
-            const oPopover = new sap.m.Popover({
-                title: oData.title,
-                contentWidth: "300px",
-                content: [
-                    new sap.m.VBox({
-                        items: [
-                            new sap.m.Text({
-                                text: oData.description
-                            }).addStyleClass("sapUiSmallMargin"),
-                            new sap.m.Text({
-                                text: "Status: " + oData.state
-                            }).addStyleClass("sapUiSmallMargin")
-                        ]
-                    })
-                ],
-                footer: new sap.m.Toolbar({
-                    content: [
-                        new sap.m.ToolbarSpacer(),
-                        new sap.m.Button({
-                            text: "Close",
-                            press: function() {
-                                oPopover.close();
-                            }
-                        })
-                    ]
-                })
+            MessageBox.show(sTooltip, {
+                title: "Process Step Information",
+                actions: [MessageBox.Action.OK],
+                emphasizedAction: MessageBox.Action.OK
             });
-            
-            oPopover.openBy(oItem);
         }
     });
 });
 
+
+
+OLD CODE DATA
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
