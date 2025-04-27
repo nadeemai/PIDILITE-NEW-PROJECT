@@ -228,11 +228,36 @@ sap.ui.define([
                     }
                 ],
                 microProcessItems: [
-                    { state: "Success", key: "step1", title: "Created", icon: "sap-icon://accept", subTitle: "Request Created", description: "Request has been created by the user." },
-                    { state: "Success", key: "step2", title: "Reviewed", icon: "sap-icon://accept", subTitle: "Reviewed by Approver", description: "Request reviewed by the first approver." },
-                    { state: "Success", key: "step3", title: "Approved", icon: "sap-icon://accept", subTitle: "Approved by Manager", description: "Request approved by the manager." },
-                    { state: "Success", current: true, key: "step4", title: "Final Approval", icon: "sap-icon://accept", subTitle: "Pending Final Approval", description: "Awaiting final approval from the director." },
-                    { state: "Warning", key: "step5", title: "Completed", icon: "sap-icon://warning", subTitle: "Not Yet Completed", description: "Final step pending completion." }
+                    { 
+                        state: "Success", 
+                        icon: "sap-icon://accept",
+                        title: "Step 1: Request Created",
+                        description: "Request was created by the buyer"
+                    },
+                    { 
+                        state: "Success", 
+                        icon: "sap-icon://accept",
+                        title: "Step 2: First Approval",
+                        description: "Approved by department head"
+                    },
+                    { 
+                        state: "Success", 
+                        icon: "sap-icon://accept",
+                        title: "Step 3: Second Approval",
+                        description: "Approved by finance team"
+                    },
+                    { 
+                        state: "Information", 
+                        icon: "sap-icon://pending",
+                        title: "Step 4: Final Approval",
+                        description: "Pending with final approver"
+                    },
+                    { 
+                        state: "None", 
+                        icon: "sap-icon://status-inactive",
+                        title: "Step 5: Completion",
+                        description: "Waiting for previous steps"
+                    }
                 ],
                 selectedRequest: {}
             };
@@ -521,72 +546,43 @@ sap.ui.define([
             MessageToast.show(`Selected details tab: ${sKey}`);
         },
 
-        _getColorByState: function (oItem) {
-            switch (oItem.getState()) {
-                case "Error": return coreLibrary.IconColor.Negative;
-                case "Warning": return coreLibrary.IconColor.Critical;
-                case "Success": return coreLibrary.IconColor.Positive;
-            }
-        },
-
         onMicroProcessItemPress: function(oEvent) {
             const oItem = oEvent.getSource();
-            const oBindingContext = oItem.getBindingContext();
-            const sTitle = oBindingContext.getProperty("title");
-            const sIcon = oBindingContext.getProperty("icon");
-            const sSubTitle = oBindingContext.getProperty("subTitle");
-            const sDescription = oBindingContext.getProperty("description");
-
+            const oContext = oItem.getBindingContext();
+            const oData = oContext.getObject();
+            
             const oPopover = new sap.m.Popover({
+                title: oData.title,
                 contentWidth: "300px",
-                title: "Process Step Details",
                 content: [
-                    new sap.m.HBox({
+                    new sap.m.VBox({
                         items: [
-                            new sap.ui.core.Icon({
-                                src: sIcon,
-                                color: this._getColorByState(oItem)
-                            }).addStyleClass("sapUiSmallMarginBegin sapUiSmallMarginEnd"),
-                            new sap.m.FlexBox({
-                                width: "100%",
-                                renderType: "Bare",
-                                direction: "Column",
-                                items: [
-                                    new sap.m.Title({
-                                        level: coreLibrary.TitleLevel.H1,
-                                        text: sTitle
-                                    }),
-                                    new sap.m.Text({
-                                        text: sSubTitle
-                                    }).addStyleClass("sapUiSmallMarginBottom sapUiSmallMarginTop"),
-                                    new sap.m.Text({
-                                        text: sDescription
-                                    })
-                                ]
-                            })
-                        ]
-                    }).addStyleClass("sapUiTinyMargin")
-                ],
-                footer: [
-                    new sap.m.Toolbar({
-                        content: [
-                            new sap.m.ToolbarSpacer(),
-                            new sap.m.Button({
-                                text: "Close",
-                                press: function() {
-                                    oPopover.close();
-                                }
-                            })
+                            new sap.m.Text({
+                                text: oData.description
+                            }).addStyleClass("sapUiSmallMargin"),
+                            new sap.m.Text({
+                                text: "Status: " + oData.state
+                            }).addStyleClass("sapUiSmallMargin")
                         ]
                     })
-                ]
+                ],
+                footer: new sap.m.Toolbar({
+                    content: [
+                        new sap.m.ToolbarSpacer(),
+                        new sap.m.Button({
+                            text: "Close",
+                            press: function() {
+                                oPopover.close();
+                            }
+                        })
+                    ]
+                })
             });
-
+            
             oPopover.openBy(oItem);
         }
     });
 });
-
 
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
