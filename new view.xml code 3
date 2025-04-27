@@ -16,8 +16,8 @@ UPDATE CODE
     <Panel class="dashboardPanel" expandable="false">
         <headerToolbar>
             <Toolbar class="headerToolbar">
-                <Image src="https://www.pidilite.com/wp-content/uploads/2023/03/Pidilite-Logo.png"
-                       width="110px" height="50px" class="logo"/>
+                <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN4zI47qvXfN00zC2FBC8aRP0kB6wtIcWTRQ" 
+                               width="110px" height="50px" class="logo"/>
                 <Title text="Approval Portal Dashboard" class="headerTitle"/>
             </Toolbar>
         </headerToolbar>
@@ -187,15 +187,34 @@ UPDATE CODE
                                         </suite:Timeline>
                                     </IconTabFilter>
                                     <IconTabFilter text="Approval Process" key="approvalProcess">
-                                        <suite:MicroProcessFlow id="microProcessFlow" >
-                                            <suite:content>
-                                                <suite:MicroProcessFlowItem 
-                                                    state="{state}" 
-                                                    icon="{icon}" 
-                                                    press="onMicroProcessItemPress"
-                                                    tooltip="{title}"/>
-                                            </suite:content>
-                                        </suite:MicroProcessFlow>
+                                        <HBox justifyContent="Center" class="sapUiSmallMarginTop">
+                                            <suite:MicroProcessFlow id="microProcessFlow" >
+                                                <suite:content>
+                                                    <suite:MicroProcessFlowItem 
+                                                        state="Success" 
+                                                        
+                                                        press="onMicroProcessItemPress"
+                                                        tooltip="Step 1: Request Created"/>
+                                                    <suite:MicroProcessFlowItem 
+                                                        state="Success" 
+                                                        
+                                                        press="onMicroProcessItemPress"
+                                                        tooltip="Step 2: First Approval"/>
+                                                    <suite:MicroProcessFlowItem 
+                                                        state="Success" 
+                                                        
+                                                        press="onMicroProcessItemPress"
+                                                        tooltip="Step 3: Final Approval"/>
+                                                </suite:content>
+                                            </suite:MicroProcessFlow>
+                                        </HBox>
+                                        <!-- <Toolbar class="sapUiSmallMarginTop">
+                                            <ToolbarSpacer/>
+                                            <Button text="Save" press="onSaveRequest" type="Default"/>
+                                            <Button text="Send Back" press="onSendBackRequest" type="Default"/>
+                                            <Button text="Reject" press="onRejectRequest" type="Reject"/>
+                                            <Button text="Approve" press="onApproveRequest" type="Accept"/>
+                                        </Toolbar> -->
                                     </IconTabFilter>
                                 </items>
                             </IconTabBar>
@@ -238,8 +257,8 @@ UPDATE CODE
                                 <items>
                                     <ColumnListItem>
                                         <cells>
-                                            <Text text="{fileName}"/>
-                                            <Button icon="sap-icon://download" press="onDownloadFile" tooltip="Download"/>
+                                            <!-- <Text text="{fileName}"/> -->
+                                            <!-- <Button icon="sap-icon://download" press="onDownloadFile" tooltip="Download"/> -->
                                         </cells>
                                     </ColumnListItem>
                                 </items>
@@ -257,7 +276,6 @@ UPDATE CODE
         </VBox>
     </Panel>
 </mvc:View>
-
 
 <mvc:View
     controllerName="com.tableentry.tablestructure.controller.Table_Entry"
