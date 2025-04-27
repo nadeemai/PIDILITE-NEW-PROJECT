@@ -174,8 +174,8 @@ UPDATE CODE
                                         </Table>
                                     </IconTabFilter>
                                     <IconTabFilter text="Timeline" key="timeline">
-                                        <VBox>
-                                            <suite:Timeline id="detailsTimeline2" enableScroll="true" content="{/timelineItems}" showHeaderBar="false" enableDoubleSided="true">
+                                        <suite:Timeline id="detailsTimeline2" enableScroll="true" content="{/timelineItems}" showHeaderBar="false" enableDoubleSided="true">
+                                            <suite:content>
                                                 <suite:TimelineItem
                                                     dateTime="{dateTime}"
                                                     title="{title}"
@@ -183,14 +183,19 @@ UPDATE CODE
                                                     userName="{userName}"
                                                     userPicture="{userPicture}"
                                                     icon="sap-icon://history"/>
-                                            </suite:Timeline>
-                                            <!-- <commons:MicroProcessFlow id="microProcessFlow" content="{/microProcessItems}">
-                                                <commons:MicroProcessFlowItem
-                                                    state="{state}"
-                                                    icon="sap-icon://accept"
-                                                    press="onMicroProcessItemPress"/>
-                                            </commons:MicroProcessFlow> -->
-                                        </VBox>
+                                            </suite:content>
+                                        </suite:Timeline>
+                                    </IconTabFilter>
+                                    <IconTabFilter text="Approval Process" key="approvalProcess">
+                                        <suite:MicroProcessFlow id="microProcessFlow" >
+                                            <suite:content>
+                                                <suite:MicroProcessFlowItem 
+                                                    state="{state}" 
+                                                    icon="{icon}" 
+                                                    press="onMicroProcessItemPress"
+                                                    tooltip="{title}"/>
+                                            </suite:content>
+                                        </suite:MicroProcessFlow>
                                     </IconTabFilter>
                                 </items>
                             </IconTabBar>
