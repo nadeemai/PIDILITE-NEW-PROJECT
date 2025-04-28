@@ -114,11 +114,11 @@ UPDATED CODE 2
                                 <HBox justifyContent="Center">
                                     <suite:MicroProcessFlow id="microProcessFlow">
                                         <suite:content>
-                                            <suite:MicroProcessFlowItem state="Success"  icon="sap-icon://accept" press="onMicroProcessItemPress" tooltip="Step 1: My Draft Request"/>
-                                            <suite:MicroProcessFlowItem state="Success"  icon="sap-icon://accept" press="onMicroProcessItemPress" tooltip="Step 2: Send Back Request"/>
-                                            <suite:MicroProcessFlowItem state="Success"  icon="sap-icon://accept" press="onMicroProcessItemPress" tooltip="Step 3: Rejected Request"/>
-                                            <suite:MicroProcessFlowItem state="Success"  icon="sap-icon://accept" press="onMicroProcessItemPress" tooltip="Step 4: In Progress Request"/>
-                                            <suite:MicroProcessFlowItem state="Success"  icon="sap-icon://accept" press="onMicroProcessItemPress" tooltip="Step 5: All Request"/>
+                                            <suite:MicroProcessFlowItem state="Success" icon="sap-icon://accept" press="onMicroProcessItemPress" tooltip="Step 1: My Draft Request"/>
+                                            <suite:MicroProcessFlowItem state="Warning" icon="sap-icon://accept" press="onMicroProcessItemPress" tooltip="Step 2: Send Back Request"/>
+                                            <suite:MicroProcessFlowItem state="Success" icon="sap-icon://accept" press="onMicroProcessItemPress" tooltip="Step 3: Rejected Request"/>
+                                            <suite:MicroProcessFlowItem state="Warning" icon="sap-icon://accept" press="onMicroProcessItemPress" tooltip="Step 4: In Progress Request"/>
+                                            <suite:MicroProcessFlowItem state="Error" icon="sap-icon://accept" press="onMicroProcessItemPress" tooltip="Step 5: All Request"/>
                                         </suite:content>
                                     </suite:MicroProcessFlow>
                                 </HBox>
@@ -229,7 +229,7 @@ UPDATED CODE 2
                             <Table id="uploadedFilesTable" items="{/uploadedFiles}" class="sapUiSmallMarginTop">
                                 <headerToolbar>
                                     <Toolbar>
-                                        <Title text="Attachment ({/uploadedFilesCount})"/>
+                                        <Title text="Attachment"/>
                                     </Toolbar>
                                 </headerToolbar>
                                 <columns>
@@ -240,287 +240,6 @@ UPDATED CODE 2
                                     <ColumnListItem>
                                         <cells>
                                             <Text text="{fileName}"/>
-                                            <Button icon="sap-icon://download" press="onDownloadFile" tooltip="Download"/>
-                                        </cells>
-                                    </ColumnListItem>
-                                </items>
-                            </Table>
-                        </form:SimpleForm>
-                    </Panel>
-                </content>
-                <beginButton>
-                    <Button text="Create" press="onCreateRequest" type="Emphasized"/>
-                </beginButton>
-                <endButton>
-                    <Button text="Cancel" press="onCancelCreate" type="Reject"/>
-                </endButton>
-            </Dialog>
-        </VBox>
-    </Panel>
-</mvc:View>
-
-
-
-UPDATE CODE 
-
-<mvc:View
-    controllerName="com.tableentry.tablestructure.controller.Table_Entry"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:u="sap.ui.unified"
-    xmlns:form="sap.ui.layout.form"
-    xmlns:layout="sap.ui.layout"
-    xmlns:suite="sap.suite.ui.commons"
-    xmlns:commons="sap.suite.ui.microchart"
-    displayBlock="true"
-    class="dashboardView">
-
-    <Panel class="dashboardPanel" expandable="false">
-        <headerToolbar>
-            <Toolbar class="headerToolbar">
-                 <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN4zI47qvXfN00zC2FBC8aRP0kB6wtIcWTRQ" 
-                               width="110px" height="50px" class="logo"/>
-                <Title text="Approval Portal Dashboard" class="headerTitle"/>
-            </Toolbar>
-        </headerToolbar>
-        <VBox class="sapUiSmallMargin">
-
-            <!-- Header Tiles -->
-            <HBox justifyContent="Center" alignItems="Center" class="tileContainer">
-                <GenericTile header="My Draft Requests" class="customTile draftTile" press="onTilePress">
-                    <TileContent>
-                        <NumericContent value="{/draftCount}" valueColor="Neutral" withMargin="false" class="centeredNumericContent"/>
-                    </TileContent>
-                </GenericTile>
-                <GenericTile header="Sent Back Requests" class="customTile sentBackTile" press="onTilePress">
-                    <TileContent>
-                        <NumericContent value="{/sentBackCount}" valueColor="Critical" withMargin="false" class="centeredNumericContent"/>
-                    </TileContent>
-                </GenericTile>
-                <GenericTile header="Rejected Requests" class="customTile rejectedTile" press="onTilePress">
-                    <TileContent>
-                        <NumericContent value="{/rejectedCount}" valueColor="Error" withMargin="false" class="centeredNumericContent"/>
-                    </TileContent>
-                </GenericTile>
-                <GenericTile header="In-Progress Requests" class="customTile inProgressTile" press="onTilePress">
-                    <TileContent>
-                        <NumericContent value="{/inProgressCount}" valueColor="Good" withMargin="false" class="centeredNumericContent"/>
-                    </TileContent>
-                </GenericTile>
-                <GenericTile header="All Requests" class="customTile allTile" press="onTilePress">
-                    <TileContent>
-                        <NumericContent value="{/allCount}" withMargin="false" class="centeredNumericContent"/>
-                    </TileContent>
-                </GenericTile>
-            </HBox>
-
-            <!-- Filter Panel -->
-            <Panel class="filterPanel">
-                <HBox alignItems="Center" justifyContent="SpaceBetween">
-                    <HBox alignItems="Center">
-                        <Label text="Request No:" class="sapUiSmallMarginEnd"/>
-                        <Input width="150px" value="{/filter/requestNo}" liveChange="onFilterChange"/>
-                        <Label text="Created By:" class="sapUiSmallMarginEnd"/>
-                        <Input width="150px" value="{/filter/createdBy}" liveChange="onFilterChange"/>
-                        <Label text="Created on:" class="sapUiSmallMarginEnd"/>
-                        <DatePicker width="150px" value="{/filter/createdOn}" change="onFilterChange"/>
-                        <Label text="Status:" class="sapUiSmallMarginEnd"/>
-                        <ComboBox width="150px" items="{/statusItems}" selectedKey="{/filter/status}" change="onFilterChange">
-                            <core:Item key="{key}" text="{text}"/>
-                        </ComboBox>
-                    </HBox>
-                    <Button text="Clear" press="onClearFilters" type="Emphasized"/>
-                </HBox>
-            </Panel>
-
-            <!-- Icon Tab Bar with Create Button -->
-            <IconTabBar id="requestsTabBar" select="onTabSelect" expandable="false" class="sapUiResponsiveMargin">
-                <items>
-                    <IconTabFilter text="Requests ({/allCount})" key="all">
-                        <VBox>
-                            <Toolbar>
-                                <Button icon="sap-icon://add" text="Create New Request" press="onCreatePress" type="Emphasized"/>
-                            </Toolbar>
-                            <Table id="dashboardTable" items="{/requests}"
-                                   mode="SingleSelectMaster" itemPress="onItemPress" growing="true" growingThreshold="10">
-                                <columns>
-                                    <Column width="15%"><Text text="Request No"/></Column>
-                                    <Column width="15%"><Text text="Created By"/></Column>
-                                    <Column width="15%"><Text text="Created On"/></Column>
-                                    <Column width="15%"><Text text="Status"/></Column>
-                                    <Column width="15%"><Text text="Remarks"/></Column>
-                                    <Column width="15%"><Text text="Pending With"/></Column>
-                                    <Column width="15%"><Text text="Request Aging"/></Column>
-                                </columns>
-                                <items>
-                                    <ColumnListItem type="Navigation">
-                                        <cells>
-                                            <Text text="{requestNo}"/>
-                                            <Text text="{createdBy}"/>
-                                            <Text text="{createdOn}"/>
-                                            <ObjectStatus text="{status}"
-                                                state="{= ${status} === 'Send Back' ? 'Warning' : ${status} === 'Rejected' ? 'Error' : ${status} === 'Pending Request' ? 'Information' : 'None'}"/>
-                                            <Text text="{remarks}"/>
-                                            <Text text="{pendingWith}"/>
-                                            <Text text="{requestAging}"/>
-                                        </cells>
-                                    </ColumnListItem>
-                                </items>
-                            </Table>
-                        </VBox>
-                    </IconTabFilter>
-                    <IconTabFilter text="Request Details" key="requestDetails" visible="{/showRequestDetails}">
-                        <Panel class="sapUiSmallMargin">
-                            <Toolbar>
-                                <ToolbarSpacer/>
-                                <Button text="Save" press="onSaveRequest" type="Default"/>
-                                <Button text="Send Back" press="onSendBackRequest" type="Default"/>
-                                <Button text="Reject" press="onRejectRequest" type="Reject"/>
-                                <Button text="Approve" press="onApproveRequest" type="Accept"/>
-                            </Toolbar>
-                            <VBox>
-                                <form:SimpleForm layout="ResponsiveGridLayout" editable="{/editable}">
-                                    <Panel headerText="Price Requisition Details" expandable="true" expanded="true">
-                                        <Label text="Fields marked with * are mandatory" class="sapUiSmallMarginTop mandatoryLabel"/>
-                                        <Label text="Reference No:*"/>
-                                        <Input value="{/selectedRequest/referenceNo}"/>
-                                        <Label text="Division:*"/>
-                                        <Input value="{/selectedRequest/division}"/>
-                                        <Label text="Created By:"/>
-                                        <Text text="{/selectedRequest/createdBy}"/>
-                                        <Label text="Created Date:"/>
-                                        <Text text="{/selectedRequest/createdOn}"/>
-                                        <Label text="DCNR# form:"/>
-                                        <Input value="{/selectedRequest/dcnrForm}"/>
-                                        <Label text="Status of the Request:"/>
-                                        <Text text="{/selectedRequest/status}"/>
-                                        <Label text="Standard Reason:"/>
-                                        <Input value="{/selectedRequest/standardReason}"/>
-                                        <Label text="Sales Group:"/>
-                                        <Input value="{/selectedRequest/salesGroup}"/>
-                                        <Label text="Comment by Creator:"/>
-                                        <Input value="{/selectedRequest/creatorComment}"/>
-                                        <Label text="DCNR% to:"/>
-                                        <Input value="{/selectedRequest/dcnrTo}"/>
-                                    </Panel>
-                                </form:SimpleForm>
-                            </VBox>
-                            <IconTabBar id="detailsTabBar2" select="onDetailsTabSelect" expandable="false" class="sapUiSmallMarginTop">
-                                <items>
-                                    <IconTabFilter text="Price Details" key="priceDetails">
-                                        <Table items="{/priceDetails}" width="100%">
-                                            <columns>
-                                                <Column><Text text="Material"/></Column>
-                                                <Column><Text text="Price List"/></Column>
-                                                <Column><Text text="Price List Description"/></Column>
-                                                <Column><Text text="UoM"/></Column>
-                                                <Column><Text text="Indicative MRP"/></Column>
-                                                <Column><Text text="Start Date"/></Column>
-                                                <Column><Text text="End Date"/></Column>
-                                                <Column><Text text="Default Price for Lot Material"/></Column>
-                                            </columns>
-                                            <items>
-                                                <ColumnListItem>
-                                                    <cells>
-                                                        <Text text="{material}"/>
-                                                        <Text text="{priceList}"/>
-                                                        <Text text="{priceListDescription}"/>
-                                                        <Text text="{uom}"/>
-                                                        <Text text="{indicativeMRP}"/>
-                                                        <Text text="{startDate}"/>
-                                                        <Text text="{endDate}"/>
-                                                        <Text text="{defaultPrice}"/>
-                                                    </cells>
-                                                </ColumnListItem>
-                                            </items>
-                                        </Table>
-                                    </IconTabFilter>
-                                    <IconTabFilter text="Timeline" key="timeline">
-                                        <suite:Timeline id="detailsTimeline2" enableScroll="true" content="{/timelineItems}" showHeaderBar="false" enableDoubleSided="true">
-                                            <suite:content>
-                                                <suite:TimelineItem
-                                                    dateTime="{dateTime}"
-                                                    title="{title}"
-                                                    text="{text}"
-                                                    userName="{userName}"
-                                                    userPicture="{userPicture}"
-                                                    icon="sap-icon://history"/>
-                                            </suite:content>
-                                        </suite:Timeline>
-                                    </IconTabFilter>
-                                    <IconTabFilter text="Approval Process" key="approvalProcess">
-                                        <HBox justifyContent="Center" class="sapUiSmallMarginTop">
-                                            <suite:MicroProcessFlow id="microProcessFlow" >
-                                                <suite:content>
-                                                    <suite:MicroProcessFlowItem 
-                                                        state="Success" 
-                                                        
-                                                        press="onMicroProcessItemPress"
-                                                        tooltip="Step 1: Request Created"/>
-                                                    <suite:MicroProcessFlowItem 
-                                                        state="Success" 
-                                                        
-                                                        press="onMicroProcessItemPress"
-                                                        tooltip="Step 2: First Approval"/>
-                                                    <suite:MicroProcessFlowItem 
-                                                        state="Success" 
-                                                        
-                                                        press="onMicroProcessItemPress"
-                                                        tooltip="Step 3: Final Approval"/>
-                                                </suite:content>
-                                            </suite:MicroProcessFlow>
-                                        </HBox>
-                                        <!-- <Toolbar class="sapUiSmallMarginTop">
-                                            <ToolbarSpacer/>
-                                            <Button text="Save" press="onSaveRequest" type="Default"/>
-                                            <Button text="Send Back" press="onSendBackRequest" type="Default"/>
-                                            <Button text="Reject" press="onRejectRequest" type="Reject"/>
-                                            <Button text="Approve" press="onApproveRequest" type="Accept"/>
-                                        </Toolbar> -->
-                                    </IconTabFilter>
-                                </items>
-                            </IconTabBar>
-                        </Panel>
-                    </IconTabFilter>
-                </items>
-            </IconTabBar>
-
-            <!-- Create Request Dialog -->
-            <Dialog id="createRequestDialog" title="Create New Request" contentWidth="500px">
-                <content>
-                    <Panel class="sapUiSmallMargin">
-                        <form:SimpleForm layout="ResponsiveGridLayout" editable="true">
-                            <Label text="Upload Files" class="sapUiSmallMarginTop"/>
-                            <u:FileUploader
-                                id="fileUploader"
-                                name="requestFileUpload"
-                                uploadUrl="upload/"
-                                tooltip="Upload supporting documents"
-                                uploadComplete="handleUploadComplete"
-                                change="handleValueChange"
-                                typeMissmatch="handleTypeMissmatch"
-                                style="Emphasized"
-                                fileType="txt,jpg,pdf,png"
-                                placeholder="Choose a file to upload...">
-                                <u:parameters>
-                                    <u:FileUploaderParameter name="param1" value="value1"/>
-                                </u:parameters>
-                            </u:FileUploader>
-                            <Table id="uploadedFilesTable" items="{/uploadedFiles}" class="sapUiSmallMarginTop">
-                                <headerToolbar>
-                                    <Toolbar>
-                                        <Title text="Attachment ({/uploadedFilesCount})"/>
-                                    </Toolbar>
-                                </headerToolbar>
-                                <columns>
-                                    <Column width="70%"><Text text="Attachment"/></Column>
-                                    <Column width="30%"><Text text="Action"/></Column>
-                                </columns>
-                                <items>
-                                    <ColumnListItem>
-                                        <cells>
-                                            <!-- <Text text="{fileName}"/> -->
                                             <!-- <Button icon="sap-icon://download" press="onDownloadFile" tooltip="Download"/> -->
                                         </cells>
                                     </ColumnListItem>
@@ -536,10 +255,26 @@ UPDATE CODE
                     <Button text="Cancel" press="onCancelCreate" type="Reject"/>
                 </endButton>
             </Dialog>
+
+            <!-- Order Status Dialog -->
+            <Dialog id="orderStatusDialog" title="Order status" class="orderStatusDialog">
+                <content>
+                    <VBox class="dialogContent">
+                        <HBox alignItems="Center">
+                            <core:Icon src="sap-icon://sys-enter-2" class="statusIcon" color="Positive"/>
+                            <Title text="Payment" class="statusTitle"/>
+                        </HBox>
+                        <Text text="Payment successful" class="statusMessage"/>
+                        <Text text="Lorem ipsum dolor sit amet." class="statusDescription"/>
+                    </VBox>
+                </content>
+                <beginButton>
+                    <Button text="Close" press="onCloseOrderStatus" type="Emphasized"/>
+                </beginButton>
+            </Dialog>
         </VBox>
     </Panel>
 </mvc:View>
-
 
 
 OLD CODE DATA
