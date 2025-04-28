@@ -132,26 +132,34 @@ UPDATED DATA CODE 3
                                 <form:SimpleForm layout="ResponsiveGridLayout" editable="{/editable}" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12">
                                     <Panel headerText="Price Requisition Details" expandable="true" expanded="true">
                                         <Label text="Fields marked with * are mandatory" class="sapUiSmallMarginTop mandatoryLabel"/>
-                                        <Label text="Reference No:*"/>
-                                        <Input value="{/selectedRequest/referenceNo}"/>
-                                        <Label text="Division:*"/>
-                                        <Input value="{/selectedRequest/division}"/>
-                                        <Label text="Created By:"/>
-                                        <Text text="{/selectedRequest/createdBy}"/>
-                                        <Label text="Created Date:"/>
-                                        <Text text="{/selectedRequest/createdOn}"/>
-                                        <Label text="DCNR# form:"/>
-                                        <Input value="{/selectedRequest/dcnrForm}"/>
-                                        <Label text="Status of the Request:"/>
-                                        <Text text="{/selectedRequest/status}"/>
-                                        <Label text="Standard Reason:"/>
-                                        <Input value="{/selectedRequest/standardReason}"/>
-                                        <Label text="Sales Group:"/>
-                                        <Input value="{/selectedRequest/salesGroup}"/>
-                                        <Label text="Comment by Creator:"/>
-                                        <Input value="{/selectedRequest/creatorComment}"/>
-                                        <Label text="DCNR% to:"/>
-                                        <Input value="{/selectedRequest/dcnrTo}"/>
+                                        <layout:Grid defaultSpan="XL6 L6 M6 S12" class="sapUiSmallMargin">
+                                            <!-- Left Column -->
+                                            <VBox>
+                                                <Label text="Reference No:*"/>
+                                                <Input value="{/selectedRequest/referenceNo}"/>
+                                                <Label text="Division:*"/>
+                                                <Input value="{/selectedRequest/division}"/>
+                                                <Label text="DCNR# form:"/>
+                                                <Input value="{/selectedRequest/dcnrForm}"/>
+                                                <Label text="Standard Reason:"/>
+                                                <Input value="{/selectedRequest/standardReason}"/>
+                                                <Label text="Comment by Creator:"/>
+                                                <Input value="{/selectedRequest/creatorComment}"/>
+                                            </VBox>
+                                            <!-- Right Column -->
+                                            <VBox>
+                                                <Label text="Created By:"/>
+                                                <Text text="{/selectedRequest/createdBy}"/>
+                                                <Label text="Created Date:"/>
+                                                <Text text="{/selectedRequest/createdOn}"/>
+                                                <Label text="Status of the Request:"/>
+                                                <Text text="{/selectedRequest/status}"/>
+                                                <Label text="Sales Group:"/>
+                                                <Input value="{/selectedRequest/salesGroup}"/>
+                                                <Label text="DCNR% to:"/>
+                                                <Input value="{/selectedRequest/dcnrTo}"/>
+                                            </VBox>
+                                        </layout:Grid>
                                     </Panel>
                                 </form:SimpleForm>
                             </VBox>
@@ -184,7 +192,7 @@ UPDATED DATA CODE 3
                                                 </ColumnListItem>
                                             </items>
                                         </Table>
-                                        <Link text="XSL Sheet" href="#" class="sapUiSmallMarginTop"/>
+                                        <!-- <Link text="XSL Sheet" href="#" class="sapUiSmallMarginTop"/> -->
                                     </IconTabFilter>
                                     <IconTabFilter text="Timeline" key="timeline">
                                         <suite:Timeline 
