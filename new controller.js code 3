@@ -379,7 +379,6 @@ sap.ui.define([
             oModel.setProperty("/selectedRequest", JSON.parse(JSON.stringify(oRequest)));
             oModel.setProperty("/showRequestDetails", true);
             
-            // Switch to the Request Details tab
             const oTabBar = this.byId("requestsTabBar");
             oTabBar.setSelectedKey("requestDetails");
         },
@@ -398,7 +397,6 @@ sap.ui.define([
             oModel.setProperty("/selectedRequest", oSelectedRequest);
             oModel.setProperty("/showRequestDetails", true);
             
-            // Switch to the Request Details tab
             const oTabBar = this.byId("requestsTabBar");
             oTabBar.setSelectedKey("requestDetails");
         },
@@ -543,17 +541,16 @@ sap.ui.define([
         },
 
         onMicroProcessItemPress: function(oEvent) {
-            const oItem = oEvent.getSource();
-            const sTooltip = oItem.getTooltip();
-            
-            MessageBox.show(sTooltip, {
-                title: "Process Step Information",
-                actions: [MessageBox.Action.OK],
-                emphasizedAction: MessageBox.Action.OK
-            });
+            this.byId("orderStatusDialog").open();
+        },
+
+        onCloseOrderStatus: function() {
+            this.byId("orderStatusDialog").close();
         }
     });
 });
+
+
 
 
 UPDATE DATA
