@@ -154,36 +154,76 @@ sap.ui.define([
                         status: "Information"
                     },
                     {
-                        dateTime: "7/22/2016 at 5:00 PM",
-                        title: "Ayushi added a note [APPROVED]",
-                        text: "OK",
-                        userName: "Ayushi",
-                        userPicture: "https://ui-avatars.com/api/?name=Ayushi",
-                        status: "Success"
+                        dateTime: "7/22/2016 at 3:00 PM",
+                        title: "Aakib Sir Created a Request",
+                        text: "PLEASE go through and evaluate.",
+                        userName: "Aakib Sir",
+                        userPicture: "https://ui-avatars.com/api/?name=Aakib Sir",
+                        status: "Information"
                     },
                     {
                         dateTime: "7/22/2016 at 3:00 PM",
-                        title: "Vikrant Sir added a note [APPROVED]",
+                        title: "Vikrant SIr Created a Request",
+                        text: "PLEASE go through and evaluate.",
+                        userName: "Virkrant SIr",
+                        userPicture: "https://ui-avatars.com/api/?name=Vikran Sir",
+                        status: "Information"
+                    },
+                    {
+                        dateTime: "7/22/2016 at 3:00 PM",
+                        title: "Ayush Sir Created a Request",
+                        text: "PLEASE go through and evaluate.",
+                        userName: "Ayush Sir",
+                        userPicture: "https://ui-avatars.com/api/?name=Ayush Sir",
+                        status: "Information"
+                    },
+                    {
+                        dateTime: "7/22/2016 at 3:00 PM",
+                        title: "Tanu Mam Created a Request",
+                        text: "PLEASE go through and evaluate.",
+                        userName: "Tanu Mam",
+                        userPicture: "https://ui-avatars.com/api/?name=Tanu Mam",
+                        status: "Information"
+                    },
+                    {
+                        dateTime: "7/22/2016 at 3:00 PM",
+                        title: "Ishan Created a Request",
+                        text: "PLEASE go through and evaluate.",
+                        userName: "Ishan",
+                        userPicture: "https://ui-avatars.com/api/?name=Ishan",
+                        status: "Information"
+                    },
+                    {
+                        dateTime: "7/22/2016 at 5:00 PM",
+                        title: "Ayushi Mam added a note [APPROVED]",
+                        text: "OK",
+                        userName: "Ayushi Mam",
+                        userPicture: "https://ui-avatars.com/api/?name=Ayushi",
+                        status: "Information"
+                    },
+                    {
+                        dateTime: "7/22/2016 at 3:00 PM",
+                        title: "Pushkar  Jhaadded a note [APPROVED]",
                         text: "Done",
-                        userName: "Vikrant Sir",
-                        userPicture: "https://ui-avatars.com/api/?name=Vikrant+Sir",
-                        status: "Success"
+                        userName: "Pushkar Jha",
+                        userPicture: "https://ui-avatars.com/api/?name=Pushkar Jha",
+                        status: "Information"
                     },
                     {
                         dateTime: "7/22/2016 at 3:00 PM",
                         title: "subham added a note [Approved]",
                         text: "Done.",
                         userName: "Subham",
-                        userPicture: "https://ui-avatars.com/api/?name=Naresh",
-                        status: "Success"
+                        userPicture: "https://ui-avatars.com/api/?name=Subham",
+                        status: "Information"
                     },
                     {
                         dateTime: "7/22/2016 at 3:00 PM",
-                        title: "Yugal added a note [APPROVED]",
+                        title: "Yugal Sir added a note [APPROVED]",
                         text: "ok",
-                        userName: "Yugal",
+                        userName: "Yugal Sir",
                         userPicture: "https://ui-avatars.com/api/?name=Yugal",
-                        status: "Success"
+                        status: "Information"
                     }
                 ],
                 priceDetails: [
@@ -550,6 +590,9 @@ sap.ui.define([
         }
     });
 });
+
+
+
 
 UPDATED CODE 2
 
