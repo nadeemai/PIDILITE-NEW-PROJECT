@@ -1,0 +1,221 @@
+.dashboardView {
+    padding: 1rem;
+}
+
+.dashboardPanel {
+    background-color: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dashboardPanel .sapMPanelContent {
+    padding: 1rem;
+}
+
+.headerToolbar {
+    background-color: #005b9f !important;
+    padding: 0.5rem 1rem;
+    height: 70px !important;
+}
+
+.headerTitle {
+    color: #ffffff !important;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    flex-grow: 1;
+    margin-left: 210px;
+}
+
+.logo {
+    position: absolute;
+    left: 1rem;
+    top: 0.5rem;
+    height: 60px;
+    width: 200px;
+    object-fit: contain;
+}
+
+.tileContainer {
+    margin-bottom: 1rem;
+    gap: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.customTile {
+    width: 140px !important;
+    height: 100px !important;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    border: 2px solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.customTile .sapMGTContent {
+    padding: 0 !important;
+    margin: 0 !important;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.customTile .sapMNC {
+    font-size: 2rem !important;
+    font-weight: bold;
+    margin: 0 !important;
+    line-height: 1;
+}
+
+.customTile .sapMGTHeader {
+    font-size: 0.875rem !important;
+    margin-bottom: 0.25rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Tile specific styles */
+.pendingTile {
+    border-color: #ffc107;
+}
+
+.approvedTile {
+    border-color: #28a745;
+}
+
+.rejectedTile {
+    border-color: #dc3545;
+}
+
+.actionButtons {
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Pulse animation for Create button */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+    }
+}
+
+.pulseButton {
+    animation: pulse 2s infinite;
+    border-radius: 4px;
+}
+
+.pulseButton .sapMBtnInner {
+    display: flex;
+    align-items: center;
+}
+
+.pulseButton .sapMBtnIcon {
+    margin-right: 0.5rem;
+}
+
+/* Table styling */
+#dashboardTable .sapMListTblHeaderCell {
+    font-weight: bold;
+    background-color: #f5f5f5;
+}
+
+/* Status colors */
+.sapMObjStatusError {
+    color: #dc3545 !important;
+}
+
+.sapMObjStatusSuccess {
+    color: #28a745 !important;
+}
+
+.sapMObjStatusWarning {
+    color: #ffc107 !important;
+}
+
+/* Upload dialog styling */
+#uploadDialog .sapMDialogScrollCont {
+    padding: 1rem;
+}
+
+#fileInput {
+    flex-grow: 1;
+    margin-right: 0.5rem;
+}
+
+#attachmentList {
+    margin-top: 0.5rem;
+}
+
+/* Division Section Table styling */
+#divisionForm .sapUiFormResGridCont {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#divisionForm .sapUiFormResGridCont > .sapUiFormElement {
+    margin-bottom: 0.5rem;
+}
+
+#divisionForm .roleLabel {
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+#divisionForm HBox {
+    display: flex;
+    gap: 1rem;
+}
+
+#divisionForm VBox {
+    flex: 1;
+}
+
+/* Additional centering for numeric content */
+.sapMGT .sapMNCValue.WithoutMargin {
+    justify-content: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .tileContainer {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .customTile {
+        width: 100% !important;
+    }
+    
+    .headerToolbar {
+        height: auto !important;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .logo {
+        position: relative;
+        left: 0;
+        margin-bottom: 0.5rem;
+    }
+    
+    .headerTitle {
+        margin-left: 0;
+        text-align: left;
+    }
+}
