@@ -15,13 +15,14 @@ sap.ui.define([
 ], function (Controller, MessageBox, MessageToast, JSONModel, Filter, FilterOperator, DateFormat, History, UIComponent, coreLibrary) {
     "use strict";
 
-    return Controller.extend("com.tableentry.tablestructure.controller.Table_Entry", {
+    return Controller.extend("com.project1.controller.View1", {
         onInit: function () {
             const oData = {
                 draftCount: 0,
                 sentBackCount: 1,
                 rejectedCount: 1,
                 inProgressCount: 2,
+                approvedCount: 0,
                 allCount: 4,
                 editable: false,
                 showRequestDetails: false,
@@ -36,7 +37,8 @@ sap.ui.define([
                     { key: "Draft", text: "Draft" },
                     { key: "Send Back", text: "Send Back" },
                     { key: "Rejected", text: "Rejected" },
-                    { key: "Pending Request", text: "Pending Request" }
+                    { key: "Pending Request", text: "Pending Request" },
+                    { key: "Approved", text: "Approved" }
                 ],
                 requestTypes: [
                     { key: "TYPE1", text: "Type 1 Request" },
@@ -48,78 +50,142 @@ sap.ui.define([
                     description: "",
                     file: null
                 },
-                uploadedFiles: [
-                    {
-                        fileName: "PDF for justification - Email"
-                    }
-                ],
-                uploadedFilesCount: 1,
+                uploadedFiles: [],
+                uploadedFilesCount: 0,
                 requests: [
                     { 
                         requestNo: "RM00000001",
-                        createdBy: "Buyer",
+                        createdBy: "Buyer1",
                         createdOn: "Feb 02, 2025",
-                        status: "Send Back",
-                        remarks: "-",
-                        pendingWith: "-",
-                        requestAging: "15 Days",
+                        status: "Pending Request",
+                        remarks: "Awaiting approval",
+                        pendingWith: "Manager1",
+                        requestAging: "10 Days",
                         referenceNo: "RM00000001",
                         division: "Division 1",
                         dcnrForm: "Form 123",
-                        standardReason: "Price Change",
+                        standardReason: "Price Adjustment",
                         salesGroup: "Group A",
-                        creatorComment: "Initial request",
+                        creatorComment: "Urgent request",
                         dcnrTo: "Finance",
                         attachments: []
                     },
                     { 
                         requestNo: "RM00000002",
-                        createdBy: "Buyer",
-                        createdOn: "Feb 02, 2025",
-                        status: "Draft",
-                        remarks: "-",
-                        pendingWith: "-",
-                        requestAging: "15 Days",
+                        createdBy: "Buyer2",
+                        createdOn: "Feb 03, 2025",
+                        status: "Pending Request",
+                        remarks: "Under review",
+                        pendingWith: "Manager2",
+                        requestAging: "8 Days",
                         referenceNo: "RM00000002",
-                        division: "Division 1",
-                        dcnrForm: "Form 123",
+                        division: "Division 2",
+                        dcnrForm: "Form 124",
                         standardReason: "Price Change",
-                        salesGroup: "Group A",
-                        creatorComment: "Initial request",
+                        salesGroup: "Group B",
+                        creatorComment: "Needs quick approval",
                         dcnrTo: "Finance",
                         attachments: []
                     },
                     { 
                         requestNo: "RM00000003",
-                        createdBy: "Buyer",
-                        createdOn: "Feb 02, 2025",
-                        status: "Rejected",
+                        createdBy: "Buyer3",
+                        createdOn: "Feb 01, 2025",
+                        status: "Draft",
                         remarks: "-",
                         pendingWith: "-",
-                        requestAging: "15 Days",
+                        requestAging: "12 Days",
                         referenceNo: "RM00000003",
                         division: "Division 1",
-                        dcnrForm: "Form 123",
-                        standardReason: "Price Change",
+                        dcnrForm: "Form 125",
+                        standardReason: "Price Update",
                         salesGroup: "Group A",
-                        creatorComment: "Initial request",
+                        creatorComment: "Draft in progress",
                         dcnrTo: "Finance",
                         attachments: []
                     },
                     { 
-                        requestNo: "RM00000004",
-                        createdBy: "Buyer",
-                        createdOn: "Feb 02, 2025",
-                        status: "Send Back",
+                        requestNo: "RM00000004,",
+                        createdBy: "Buyer3",
+                        createdOn: "Feb 01, 2025",
+                        status: "Draft",
                         remarks: "-",
                         pendingWith: "-",
-                        requestAging: "15 Days",
-                        referenceNo: "RM00000004",
+                        requestAging: "12 Days",
+                        referenceNo: "RM00000004,",
                         division: "Division 1",
-                        dcnrForm: "Form 123",
-                        standardReason: "Price Change",
+                        dcnrForm: "Form 125",
+                        standardReason: "Price Update",
                         salesGroup: "Group A",
-                        creatorComment: "Initial request",
+                        creatorComment: "Draft in progress",
+                        dcnrTo: "Finance",
+                        attachments: []
+                    },
+                    { 
+                        requestNo: "RM00000005",
+                        createdBy: "Buyer4",
+                        createdOn: "Feb 04, 2025",
+                        status: "Send Back",
+                        remarks: "Needs revision",
+                        pendingWith: "Buyer4",
+                        requestAging: "5 Days",
+                        referenceNo: "RM00000005",
+                        division: "Division 3",
+                        dcnrForm: "Form 126",
+                        standardReason: "Price Correction",
+                        salesGroup: "Group C",
+                        creatorComment: "Sent back for updates",
+                        dcnrTo: "Finance",
+                        attachments: []
+                    },
+                    { 
+                        requestNo: "RM00000006",
+                        createdBy: "Buyer4",
+                        createdOn: "Feb 04, 2025",
+                        status: "Send Back",
+                        remarks: "Needs revision",
+                        pendingWith: "Buyer4",
+                        requestAging: "5 Days",
+                        referenceNo: "RM00000006",
+                        division: "Division 3",
+                        dcnrForm: "Form 126",
+                        standardReason: "Price Correction",
+                        salesGroup: "Group C",
+                        creatorComment: "Sent back for updates",
+                        dcnrTo: "Finance",
+                        attachments: []
+                    },
+                    { 
+                        requestNo: "RM00000007",
+                        createdBy: "Buyer5",
+                        createdOn: "Jan 30, 2025",
+                        status: "Rejected",
+                        remarks: "Invalid data",
+                        pendingWith: "-",
+                        requestAging: "15 Days",
+                        referenceNo: "RM00000007",
+                        division: "Division 2",
+                        dcnrForm: "Form 127",
+                        standardReason: "Price Change",
+                        salesGroup: "Group B",
+                        creatorComment: "Request rejected",
+                        dcnrTo: "Finance",
+                        attachments: []
+                    },
+                    { 
+                        requestNo: "RM00000008",
+                        createdBy: "Buyer5",
+                        createdOn: "Jan 30, 2025",
+                        status: "Rejected",
+                        remarks: "Invalid data",
+                        pendingWith: "-",
+                        requestAging: "15 Days",
+                        referenceNo: "RM00000008",
+                        division: "Division 2",
+                        dcnrForm: "Form 127",
+                        standardReason: "Price Change",
+                        salesGroup: "Group B",
+                        creatorComment: "Request rejected",
                         dcnrTo: "Finance",
                         attachments: []
                     }
@@ -147,6 +213,14 @@ sap.ui.define([
                 timelineItems: [
                     {
                         dateTime: "7/22/2016 at 3:00 PM",
+                        title: "Pushpak Jha Sir Created a Request",
+                        text: "PLEASE go through and evaluate.",
+                        userName: "Pushpak Jha Sir",
+                        userPicture: "https://ui-avatars.com/api/?name=PushpakJhaSir",
+                        status: "Information"
+                    },
+                    {
+                        dateTime: "7/22/2016 at 3:00 PM",
                         title: "Ankit Patilak Created a Request",
                         text: "PLEASE go through and evaluate.",
                         userName: "Ankit Patilak",
@@ -158,7 +232,7 @@ sap.ui.define([
                         title: "Aakib Sir Created a Request",
                         text: "PLEASE go through and evaluate.",
                         userName: "Aakib Sir",
-                        userPicture: "https://ui-avatars.com/api/?name=Aakib Sir",
+                        userPicture: "https://ui-avatars.com/api/?name=AakibSir",
                         status: "Information"
                     },
                     {
@@ -166,7 +240,7 @@ sap.ui.define([
                         title: "Vikrant SIr Created a Request",
                         text: "PLEASE go through and evaluate.",
                         userName: "Virkrant SIr",
-                        userPicture: "https://ui-avatars.com/api/?name=Vikran Sir",
+                        userPicture: "https://ui-avatars.com/api/?name=VikranSir",
                         status: "Information"
                     },
                     {
@@ -174,7 +248,7 @@ sap.ui.define([
                         title: "Ayush Sir Created a Request",
                         text: "PLEASE go through and evaluate.",
                         userName: "Ayush Sir",
-                        userPicture: "https://ui-avatars.com/api/?name=Ayush Sir",
+                        userPicture: "https://ui-avatars.com/api/?name=AyushSir",
                         status: "Information"
                     },
                     {
@@ -182,7 +256,7 @@ sap.ui.define([
                         title: "Tanu Mam Created a Request",
                         text: "PLEASE go through and evaluate.",
                         userName: "Tanu Mam",
-                        userPicture: "https://ui-avatars.com/api/?name=Tanu Mam",
+                        userPicture: "https://ui-avatars.com/api/?name=TanuMam",
                         status: "Information"
                     },
                     {
@@ -198,23 +272,23 @@ sap.ui.define([
                         title: "Ayushi Mam added a note [APPROVED]",
                         text: "OK",
                         userName: "Ayushi Mam",
-                        userPicture: "https://ui-avatars.com/api/?name=Ayushi",
+                        userPicture: "https://ui-avatars.com/api/?name=AyushiMam",
                         status: "Information"
                     },
                     {
                         dateTime: "7/22/2016 at 3:00 PM",
-                        title: "Pushkar  Jhaadded a note [APPROVED]",
+                        title: "Pushkar Jha added a note [APPROVED]",
                         text: "Done",
                         userName: "Pushkar Jha",
-                        userPicture: "https://ui-avatars.com/api/?name=Pushkar Jha",
+                        userPicture: "https://ui-avatars.com/api/?name=PushkarJha",
                         status: "Information"
                     },
                     {
                         dateTime: "7/22/2016 at 3:00 PM",
-                        title: "subham added a note [Approved]",
+                        title: "Subham D added a note [Approved]",
                         text: "Done.",
-                        userName: "Subham",
-                        userPicture: "https://ui-avatars.com/api/?name=Subham",
+                        userName: "Subham D",
+                        userPicture: "https://ui-avatars.com/api/?name=SubhamD",
                         status: "Information"
                     },
                     {
@@ -223,6 +297,14 @@ sap.ui.define([
                         text: "ok",
                         userName: "Yugal Sir",
                         userPicture: "https://ui-avatars.com/api/?name=Yugal",
+                        status: "Information"
+                    },
+                    {
+                        dateTime: "7/22/2016 at 3:00 PM",
+                        title: "Suraj Sir added a note [APPROVED]",
+                        text: "ok",
+                        userName: "Suraj Sir",
+                        userPicture: "https://ui-avatars.com/api/?name=Suraj",
                         status: "Information"
                     }
                 ],
@@ -323,6 +405,12 @@ sap.ui.define([
                 case "In-Progress Requests":
                     aFilters.push(new Filter("status", FilterOperator.EQ, "Pending Request"));
                     break;
+                case "Approved Requests":
+                    aFilters.push(new Filter("status", FilterOperator.EQ, "Approved"));
+                    break;
+                case "All Requests":
+                    aFilters = [];
+                    break;
             }
             
             oBinding.filter(aFilters);
@@ -338,7 +426,7 @@ sap.ui.define([
             let aFilters = [];
             
             if (oFilters.requestNo) {
-                aFilters.push(new Filter("status", FilterOperator.Contains, oFilters.requestNo));
+                aFilters.push(new Filter("requestNo", FilterOperator.Contains, oFilters.requestNo));
             }
             
             if (oFilters.createdBy) {
@@ -558,6 +646,7 @@ sap.ui.define([
                 sentBackCount: aRequests.filter(r => r.status === "Send Back").length,
                 rejectedCount: aRequests.filter(r => r.status === "Rejected").length,
                 inProgressCount: aRequests.filter(r => r.status === "Pending Request").length,
+                approvedCount: aRequests.filter(r => r.status === "Approved").length,
                 allCount: aRequests.length
             };
             
@@ -565,6 +654,7 @@ sap.ui.define([
             oModel.setProperty("/sentBackCount", oCounts.sentBackCount);
             oModel.setProperty("/rejectedCount", oCounts.rejectedCount);
             oModel.setProperty("/inProgressCount", oCounts.inProgressCount);
+            oModel.setProperty("/approvedCount", oCounts.approvedCount);
             oModel.setProperty("/allCount", oCounts.allCount);
         },
 
