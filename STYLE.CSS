@@ -14,13 +14,13 @@
 }
 
 .headerToolbar {
-    background-color: #005b9f !important;
+    background-color: #3f024f !important;
     padding: 0.5rem 1rem;
     height: 70px !important;
 }
 
 .headerTitle {
-    color: #ffffff !important;
+    color: #06e2ed !important;
     font-size: 1.5rem;
     font-weight: bold;
     text-align: center;
@@ -30,27 +30,28 @@
 
 .logo {
     position: absolute;
-    left: 1rem;
+    left: 3rem;
     top: 0.5rem;
-    height: 60px;
-    width: 200px;
-    object-fit: contain;
+    height: 300px;
+    width: 300px;
+    object-fit:cover;
+    background:fixed;
 }
 
 .tileContainer {
     margin-bottom: 1rem;
-    gap: 2rem;
+    gap: 1rem;
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .customTile {
-    width: 140px !important;
+    width: 180px !important;
     height: 100px !important;
     border-radius: 12px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     text-align: center;
-    border: 2px solid;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -84,54 +85,53 @@
 }
 
 /* Tile specific styles */
-.pendingTile {
-    border-color: #ffc107;
+.draftTile {
+    /* background-color: #f0f0f0; */
+    border: 1px solid #6c757d;
 }
 
-.approvedTile {
-    border-color: #28a745;
+.sentBackTile {
+    /* background-color: #fff3cd; */
+    border: 1px solid #ffc107;
 }
 
 .rejectedTile {
-    border-color: #dc3545;
+    /* background-color: #f8d7da; */
+    border: 1px solid #dc3545;
 }
 
-.actionButtons {
-    gap: 1rem;
-    margin-bottom: 1rem;
+.inProgressTile {
+    /* background-color: #d1e7dd; */
+    border: 1px solid #198754;
+}
+.approvedTile {
+    border: 1px solid #20011b;
 }
 
-/* Pulse animation for Create button */
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
-    }
-    70% {
-        box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
-    }
+.allTile {
+    /* background-color: #e2e3e5; */
+    border: 1px solid #6c757d;
 }
 
-.pulseButton {
-    animation: pulse 2s infinite;
+.filterPanel {
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: #f8f9fa;
     border-radius: 4px;
 }
 
-.pulseButton .sapMBtnInner {
-    display: flex;
-    align-items: center;
+.filterPanel .sapMInputBase {
+    margin-right: 1rem;
 }
 
-.pulseButton .sapMBtnIcon {
-    margin-right: 0.5rem;
+.commentText {
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
 }
 
-/* Table styling */
-#dashboardTable .sapMListTblHeaderCell {
-    font-weight: bold;
-    background-color: #f5f5f5;
+.commentTimestamp {
+    font-size: 0.75rem;
+    color: #6c757d;
 }
 
 /* Status colors */
@@ -147,55 +147,15 @@
     color: #ffc107 !important;
 }
 
-/* Upload dialog styling */
-#uploadDialog .sapMDialogScrollCont {
-    padding: 1rem;
-}
-
-#fileInput {
-    flex-grow: 1;
-    margin-right: 0.5rem;
-}
-
-#attachmentList {
-    margin-top: 0.5rem;
-}
-
-/* Division Section Table styling */
-#divisionForm .sapUiFormResGridCont {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-#divisionForm .sapUiFormResGridCont > .sapUiFormElement {
-    margin-bottom: 0.5rem;
-}
-
-#divisionForm .roleLabel {
-    font-weight: bold;
-    margin-bottom: 0.25rem;
-}
-
-#divisionForm HBox {
-    display: flex;
-    gap: 1rem;
-}
-
-#divisionForm VBox {
-    flex: 1;
-}
-
-/* Additional centering for numeric content */
-.sapMGT .sapMNCValue.WithoutMargin {
-    justify-content: center;
+.sapMObjStatusInformation {
+    color: #0dcaf0 !important;
 }
 
 /* Responsive adjustments */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .tileContainer {
         flex-direction: column;
-        gap: 1rem;
+        align-items: center;
     }
     
     .customTile {
@@ -217,5 +177,16 @@
     .headerTitle {
         margin-left: 0;
         text-align: left;
+    }
+    
+    .filterPanel .sapMHBox {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .filterPanel .sapMInputBase {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+        width: 100%;
     }
 }
