@@ -306,6 +306,22 @@ sap.ui.define([
                         userName: "Suraj Sir",
                         userPicture: "https://ui-avatars.com/api/?name=Suraj",
                         status: "Information"
+                    },
+                    {
+                        dateTime: "7/22/2016 at 3:00 PM",
+                        title: "Ravindra Kumar added a note [APPROVED]",
+                        text: "ok",
+                        userName: "Ravindra Kumar Sir",
+                        userPicture: "https://ui-avatars.com/api/?name=Ravindra",
+                        status: "Information"
+                    },
+                    {
+                        dateTime: "7/22/2016 at 3:00 PM",
+                        title: "Vikash Sir added a note [APPROVED]",
+                        text: "ok",
+                        userName: "Vikash Sir Sir",
+                        userPicture: "https://ui-avatars.com/api/?name=Vikash",
+                        status: "Information"
                     }
                 ],
                 priceDetails: [
