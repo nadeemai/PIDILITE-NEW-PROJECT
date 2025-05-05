@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Approval Portal Dashboard</title>
+    <script id="sap-ui-bootstrap"
+            src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
+            data-sap-ui-libs="sap.m, sap.ui.layout, sap.ui.unified, sap.suite.ui.commons"
+            data-sap-ui-theme="sap_belize"
+            data-sap-ui-compatVersion="edge"
+            data-sap-ui-async="true">
+    </script>
+    <script>
+        sap.ui.getCore().attachInit(function() {
+            sap.ui.require([
+                "sap/ui/core/mvc/XMLView",
+                "sap/ui/model/json/JSONModel"
+            ], function(XMLView, JSONModel) {
+                var oModel = new JSONModel({
+                    draftCount: 0,
+                    sentBackCount: 1,
+                    rejectedCount: 1,
+                    inProgressCount: 2,
+                    allCount: 4,
+                    editable: false,
+                    filter: {
+                        requestNo: "",
+                        createdBy: "",
+                        createdOn: "",
+                        status: ""
+                    },
+                    statusItems: [
+                        { key: "", text: "All" },
+                        { key: "Draft", text: "Draft" },
+                        { key: "Send Back", text: "Send Back" },
+                        { key: "Rejected", text: "Rejected" },
+                        { key: "Pending Request", text: "Pending Request" }
+                    ],
+                    requestTypes: [
+                        { key: "TYPE1", text: "Type 1 Request" },
+                        { key: "TYPE2", text: "Type 2 Request" },
+                        { key: "TYPE3", text: "Type 3 Request" }
+                    ],
+                    newRequest: {
+                        type: "",
+                        description: "",
+                        file: null
+                    },
+                    requests: [
+                        { 
+                            requestNo: "RAM00000001",
+                            createdBy: "Buyer",
+                            createdOn: "Feb 02, 2025",
+                            status: "Send Back",
+                            remarks: "-",
+                            pendingWith: "-",
+                            requestAging: "15 Days",
+                            comments: []
+                        },
+                        { 
+                            requestNo: "RAM00000002",
+                            createdBy: "Buyer",
+                            createdOn: "Feb 02, 2025",
+                            status: "Pending Request",
+                            remarks: "-",
+                            pendingWith: "user3@pellme.com",
+                            requestAging: "15 Days",
+                            comments: []
+                        },
+                        { 
+                            requestNo: "RAM00000003",
+                            createdBy: "Buyer",
+                            createdOn: "Feb 02, 2025",
+                            status: "Rejected",
+                            remarks: "-",
+                            pendingWith: "-",
+                            requestAging: "15 Days",
+                            comments: []
+                        },
+                        { 
+                            requestNo: "RAM00000004",
+                            createdBy: "Buyer",
+                            createdOn: "Feb 02, 2025",
+                            status: "Pending Request",
+                            remarks: "-",
+                            pendingWith: "user2@pellme.com",
+                            requestAging: "15 Days",
+                            comments: []
+                        }
+                    ],
+                    selectedRequest: {}
+                });
+
+                var oView = new XMLView({
+                    viewName: "com.tableentry.tablestructure.view.Table_Entry"
+                });
+
+                oView.setModel(oModel);
+                oView.placeAt("content");
+            });
+        });
+    </script>
+</head>
+<body id="content" class="sapUiBody">
+</body>
+</html>
